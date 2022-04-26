@@ -8,8 +8,27 @@
 
 config_version=5
 
+_global_script_classes=[{
+"base": "TileMap",
+"class": &"Chunk2D",
+"language": &"GDScript",
+"path": "res://customObjects/mapChunk.gd"
+}]
+_global_script_class_icons={
+"Chunk2D": ""
+}
+
 [application]
 
 config/name="ALARv2"
+run/main_scene="res://scenes/world.tscn"
 config/icon="res://icon.png"
 config/features=PackedStringArray("4.0", "Vulkan Clustered")
+
+[autoload]
+
+GB="*res://global/globalBase.gd"
+
+[rendering]
+
+textures/canvas_textures/default_texture_filter=0
