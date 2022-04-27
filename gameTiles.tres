@@ -9,21 +9,32 @@ resource_name = "Grass"
 texture = ExtResource( "1_4mure" )
 texture_region_size = Vector2i(8, 8)
 0:0/0 = 0
+0:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+0:0/0/physics_layer_0/angular_velocity = 0.0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-4, -4, 4, -4, 4, 4, -4, 4)
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_55mmc"]
 resource_name = "Dirt"
 texture = ExtResource( "2_p4k4r" )
 texture_region_size = Vector2i(8, 8)
 0:0/0 = 0
+0:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+0:0/0/physics_layer_0/angular_velocity = 0.0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-4, -4, 4, -4, 4, 4, -4, 4)
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_tet1p"]
 resource_name = "Stone"
 texture = ExtResource( "3_76qar" )
 texture_region_size = Vector2i(8, 8)
+use_texture_padding = false
 0:0/0 = 0
+0:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+0:0/0/physics_layer_0/angular_velocity = 0.0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-4, -4, 4, -4, 4, 4, -4, 4)
 
 [resource]
 tile_size = Vector2i(8, 8)
+physics_layer_0/collision_layer = 1
 sources/0 = SubResource( "TileSetAtlasSource_bi1hq" )
 sources/1 = SubResource( "TileSetAtlasSource_55mmc" )
 sources/2 = SubResource( "TileSetAtlasSource_tet1p" )

@@ -1,0 +1,69 @@
+[gd_resource type="SpriteFrames" load_steps=14 format=3 uid="uid://cphcdkhwmp7sk"]
+
+[ext_resource type="Texture2D" uid="uid://bj14g3g4l1mv2" path="res://Textures/Player.png" id="1_vjnn8"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w3hir"]
+atlas = ExtResource( "1_vjnn8" )
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ay04l"]
+atlas = ExtResource( "1_vjnn8" )
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kqtnq"]
+atlas = ExtResource( "1_vjnn8" )
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bpylw"]
+atlas = ExtResource( "1_vjnn8" )
+region = Rect2(64, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mjbpn"]
+atlas = ExtResource( "1_vjnn8" )
+region = Rect2(80, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3keov"]
+atlas = ExtResource( "1_vjnn8" )
+region = Rect2(96, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vef51"]
+atlas = ExtResource( "1_vjnn8" )
+region = Rect2(112, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qjxmh"]
+atlas = ExtResource( "1_vjnn8" )
+region = Rect2(128, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_u3cyt"]
+atlas = ExtResource( "1_vjnn8" )
+region = Rect2(128, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_58rwl"]
+atlas = ExtResource( "1_vjnn8" )
+region = Rect2(144, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_goixn"]
+atlas = ExtResource( "1_vjnn8" )
+region = Rect2(160, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fm0wl"]
+atlas = ExtResource( "1_vjnn8" )
+region = Rect2(176, 0, 16, 16)
+
+[resource]
+animations = [{
+"frames": [SubResource( "AtlasTexture_w3hir" ), SubResource( "AtlasTexture_ay04l" ), SubResource( "AtlasTexture_kqtnq" ), SubResource( "AtlasTexture_bpylw" )],
+"loop": true,
+"name": &"Move",
+"speed": 8.0
+}, {
+"frames": [SubResource( "AtlasTexture_mjbpn" ), SubResource( "AtlasTexture_3keov" ), SubResource( "AtlasTexture_vef51" ), SubResource( "AtlasTexture_qjxmh" )],
+"loop": false,
+"name": &"Jump",
+"speed": 12.0
+}, {
+"frames": [SubResource( "AtlasTexture_u3cyt" ), SubResource( "AtlasTexture_58rwl" ), SubResource( "AtlasTexture_goixn" ), SubResource( "AtlasTexture_fm0wl" )],
+"loop": false,
+"name": &"Land",
+"speed": 12.0
+}]

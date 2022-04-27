@@ -1,3 +1,15 @@
-[gd_scene format=3 uid="uid://dsby0lkm7s4tx"]
+[gd_scene load_steps=3 format=3 uid="uid://dsby0lkm7s4tx"]
+
+[ext_resource type="PackedScene" uid="uid://ddph5ppn85qot" path="res://scenes/player.tscn" id="1_fctrf"]
+[ext_resource type="Texture2D" uid="uid://3gvifam4qfq0" path="res://Textures/MineSheet.png" id="2_1e1tv"]
 
 [node name="worldBase" type="Node2D"]
+
+[node name="Player" parent="." instance=ExtResource( "1_fctrf" )]
+position = Vector2(283, 124)
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+top_level = true
+texture = ExtResource( "2_1e1tv" )
+centered = false
+hframes = 7

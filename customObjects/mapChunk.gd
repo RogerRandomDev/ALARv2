@@ -9,14 +9,15 @@ var chunkPos=Vector2i.ZERO
 func _ready():tile_set=GB.Tiles
 #fills chunk using the tilemaps array format to make it faster
 func fillChunk(chunkData:Array,myPos):
-#	set("layer_0/tile_data",chunkData[0])
-	set("layer_1/tile_data",chunkData[1])
-	set_cell(0,Vector2i(1,1),0,Vector2i(0,0),0)
-	print(get("layer_0/tile_data"))
+	set("layer_0/tile_data",chunkData[0])
+#	set("layer_1/tile_data",chunkData[1])
 	chunkPos=myPos
 	emit_signal('chunk_loaded',chunkPos)
 
 
 
-func placeTile(front:bool,tilePos:Vector2i,tileID:int,tileRot:int=0):
+func placeTile(front:bool,tilePos:Vector2i,tileID:int,_tileRot:int=0):
 	set_cell(int(!front),tilePos-chunkPos,tileID,Vector2i(0,0),tileID)
+
+func disposeChunk():
+	queue_free()
