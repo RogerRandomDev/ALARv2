@@ -9,6 +9,9 @@ var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 var last_chunk=Vector2i.ZERO
 #set to playerHand object when made
 var hand=null
+#inventory system
+var inventory=load("res://customObjects/inventory.gd").new()
+
 
 func _ready():
 	last_chunk=GB.posToChunk(global_position)
@@ -17,7 +20,7 @@ func _ready():
 	timer.autostart=true
 	timer.connect('timeout',check_chunk)
 	add_child(timer)
-	GB.moveSprite=get_parent().get_node('Sprite2D')
+	inventory._ready()
 
 
 func _physics_process(delta):

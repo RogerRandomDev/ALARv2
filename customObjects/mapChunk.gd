@@ -16,8 +16,8 @@ func fillChunk(chunkData:Array,myPos):
 
 
 
-func placeTile(front:bool,tilePos:Vector2i,tileID:int,_tileRot:int=0):
-	set_cell(int(!front),tilePos-chunkPos,tileID,Vector2i(0,0),tileID)
+func placeTile(front:bool,tilePos:Vector2i,tileID:int=0,_tileRot:int=0):
+	set_cell(int(!front),tilePos,tileID,Vector2i(0,0),tileID)
 
 func disposeChunk():
 	queue_free()

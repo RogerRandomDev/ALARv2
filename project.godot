@@ -13,9 +13,15 @@ _global_script_classes=[{
 "class": &"Chunk2D",
 "language": &"GDScript",
 "path": "res://customObjects/mapChunk.gd"
+}, {
+"base": "Node",
+"class": &"inventoryObject",
+"language": &"GDScript",
+"path": "res://customObjects/inventory.gd"
 }]
 _global_script_class_icons={
-"Chunk2D": ""
+"Chunk2D": "",
+"inventoryObject": ""
 }
 
 [application]
