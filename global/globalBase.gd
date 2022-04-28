@@ -2,6 +2,7 @@ extends Node
 
 const Tiles=preload("res://gameTiles.tres")
 var chunkAssemble=load("res://global/chunkBuilder.gd").new()
+var playerStats=load("res://global/playerStats.gd").new()
 var player=null
 var moveSprite=null
 func _ready():
@@ -28,3 +29,15 @@ func posToChunkAndCell(global):
 	var chunk=posToChunk(global)
 	return [chunk,posToCell(global)/8-chunk*chunkAssemble.chunkSize]
 
+#mines cell from chunk
+func mineCellFromChunk(chunk,cell):
+	
+	if chunkAssemble.loadedChunks.has(chunk):
+		chunkAssemble.loadedChunks[chunk].mineTile(true,cell)
+		chunkAssemble.chunkData[chunk][cell.x][cell.y]=-1
+#gets cell at given point
+func getCellAtPoint(posb):
+	var pos=posToChunkAndCell(posb)
+	if pos[0].x<0:pos[1].x+=1
+	if !chunkAssemble.loadedChunks.has(pos[0]):return -1
+	return chunkAssemble.loadedChunks[pos[0]].get_cell_source_id(0,pos[1],false)

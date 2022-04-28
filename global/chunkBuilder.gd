@@ -9,7 +9,7 @@ var terrainNoise0=preload("res://terrainNoise/terrainNoise0.tres")
 
 #these are used for storing chunk data and whatnot
 var chunkData={}
-
+var chunkEntities={}
 
 
 ###
@@ -45,6 +45,7 @@ func _chunkLoad():
 			if !keepchunks.has(chunk):
 				loadedChunks[chunk].disposeChunk()
 				loadedChunks.erase(chunk)
+				#also need to store it in a file as the chunkdata
 			
 #the chunk builder
 func buildChunk(chunkPos=null):
@@ -67,14 +68,8 @@ func buildChunk(chunkPos=null):
 		cell-=chunkPos*chunkSize
 		if cellID==0&&cellData[1][1]:chunkUpdates.push_back(growTree(cell,chunkPos))
 		#sets cellID if it is changed by the chunkdata already
-#		if chunkData[chunkPos][x][y]!=-2:
-#			cellID=chunkData[chunkPos][x][y]
-#			print('a')
-			
-#		#everything in the else is done only if the cell hasnt been changed by the player
-#		else:
-#			pass
-		#doesnt store empty cells as the engine doesnt do that
+		if chunkData[chunkPos][x][y]!=-2:cellID=chunkData[chunkPos][x][y]
+		
 		if cellID==-1:continue
 		chunkData[chunkPos][x][y]=cellID
 		#data is input twice for some reason, but it breaks otherwise
@@ -126,6 +121,10 @@ func growTree(cell,chunkPos):
 	var chunkCellsUpdated={}
 	var curChunk=chunkPos
 	for y in treeSize:
+		#default log
+		var cellID=3
+		#the leaves
+		if y+3>treeSize:cellID=4
 		cell.y-=1
 		if cell.y<0:
 			cell.y+=16
@@ -134,7 +133,7 @@ func growTree(cell,chunkPos):
 			chunkCellsUpdated[curChunk]=[]
 		#adds the updated cell to the update array
 		chunkCellsUpdated[curChunk].push_back(cell)
-		chunkCellsUpdated[curChunk].push_back(0)
+		chunkCellsUpdated[curChunk].push_back(cellID)
 	return chunkCellsUpdated
 
 
@@ -179,3 +178,13 @@ func storeEmptyChunk(chunkPos):
 		chunkData[chunkPos].push_back([])
 		for d in chunkSize:
 			chunkData[chunkPos][c].push_back(-2)
+
+
+#allows me to shrink the dictionary
+func updateDictionary(dic,newDic):
+	for key in newDic:
+		if dic.has(key):
+			dic[key]+=newDic[key]
+		else:
+			dic[key]=newDic[key]
+	return dic

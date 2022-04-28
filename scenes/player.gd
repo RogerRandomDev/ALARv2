@@ -1,7 +1,7 @@
 extends CharacterBody2D
 
 
-const SPEED = 32.0
+const SPEED = 64.0
 const JUMP_VELOCITY = -45.
 @onready var sprite=$sprite
 # Get the gravity from the project settings to be synced with RigidDynamicBody nodes.
@@ -11,9 +11,13 @@ var last_chunk=Vector2i.ZERO
 var hand=null
 #inventory system
 var inventory=load("res://customObjects/inventory.gd").new()
+var heldImage=Sprite2D.new()
 
 
 func _ready():
+	add_child(heldImage)
+	
+	heldImage.top_level=true
 	last_chunk=GB.posToChunk(global_position)
 	var timer=Timer.new()
 	timer.wait_time=0.5
@@ -21,9 +25,13 @@ func _ready():
 	timer.connect('timeout',check_chunk)
 	add_child(timer)
 	inventory._ready()
+	hand=load("res://holdingScripts/drill.gd").new()
+	hand.holdImage=heldImage
+	hand._ready()
 
 
 func _physics_process(delta):
+	if hand!=null:hand.update(delta)
 	# Add the gravity.
 	if not is_on_floor():
 		velocity.y += gravity * delta
@@ -43,11 +51,6 @@ func _physics_process(delta):
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 	animation_handler(direction)
 	move_and_slide()
-func _input(_event):
-	if Input.is_mouse_button_pressed(1):
-		var deletePos=GB.posToChunkAndCell(get_global_mouse_position())
-		if GB.chunkAssemble.loadedChunks.has(deletePos[0]):
-			GB.chunkAssemble.loadedChunks[deletePos[0]].set_cell(0,deletePos[1],-1,Vector2i(-1,-1),-1)
 
 
 func check_chunk():
