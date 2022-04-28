@@ -13,7 +13,12 @@ func update(delta):
 		holdImage.visible=true
 		progress+=delta*GB.playerStats.mineSpeed
 		var holdPos=holdImage.get_parent().get_global_mouse_position()
+		if holdPos.x<0:return
 		holdImage.position=holdPos
+		holdPos-=holdImage.get_parent().global_position
+		if holdPos.length_squared()>576:
+			holdImage.position=holdPos.normalized()*24+holdImage.get_parent().global_position
+		holdPos+=holdImage.get_parent().global_position
 		holdImage.global_position=Vector2i(holdImage.global_position/8)*8
 		if holdPos.x<0:holdImage.global_position.x-=8
 		if holdPos.y<0:holdImage.global_position.y-=8

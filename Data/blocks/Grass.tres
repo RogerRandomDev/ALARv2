@@ -1,0 +1,10 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://cn5oistqixfre"]
+
+[ext_resource type="Script" path="res://customObjects/objectData.gd" id="1_o0pmg"]
+
+[resource]
+script = ExtResource( "1_o0pmg" )
+item_id = 0
+item_name = ""
+custom_action = ""
+stack_size = 99

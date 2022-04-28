@@ -5,7 +5,12 @@ var chunkAssemble=load("res://global/chunkBuilder.gd").new()
 var playerStats=load("res://global/playerStats.gd").new()
 var player=null
 var moveSprite=null
+
+#the current save file
+var curSave="save0"
+
 func _ready():
+	makeSavePath()
 	chunkAssemble.chunkHolder=get_tree().current_scene
 	chunkAssemble._ready()
 #this sets the current chunk to load, then activates the chunkloader
@@ -30,14 +35,21 @@ func posToChunkAndCell(global):
 	return [chunk,posToCell(global)/8-chunk*chunkAssemble.chunkSize]
 
 #mines cell from chunk
-func mineCellFromChunk(chunk,cell):
+func mineCellFromChunk(chunk,cell,layer=0):
 	
 	if chunkAssemble.loadedChunks.has(chunk):
 		chunkAssemble.loadedChunks[chunk].mineTile(true,cell)
-		chunkAssemble.chunkData[chunk][cell.x][cell.y]=-1
+		chunkAssemble.chunkData[chunk][layer][cell.x][cell.y]=-1
 #gets cell at given point
-func getCellAtPoint(posb):
+func getCellAtPoint(posb,layer=0):
 	var pos=posToChunkAndCell(posb)
 	if pos[0].x<0:pos[1].x+=1
 	if !chunkAssemble.loadedChunks.has(pos[0]):return -1
-	return chunkAssemble.loadedChunks[pos[0]].get_cell_source_id(0,pos[1],false)
+	return chunkAssemble.loadedChunks[pos[0]].get_cell_source_id(layer,pos[1],false)
+
+func getSavePath():
+	return "user://saves/%s/"%curSave
+func makeSavePath():
+	var dir=Directory.new()
+	if !dir.dir_exists(getSavePath()):
+		dir.make_dir_recursive(getSavePath()+"chunks")

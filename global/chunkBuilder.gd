@@ -43,41 +43,53 @@ func _chunkLoad():
 		#gets rid of unneeded chunks
 		for chunk in loadedChunks.keys():
 			if !keepchunks.has(chunk):
-				loadedChunks[chunk].disposeChunk()
+				var sChunk=loadedChunks[chunk]
+				SaveSystem.saveChunk(chunk,sChunk.getFullData())
+				sChunk.disposeChunk()
 				loadedChunks.erase(chunk)
+				chunkData.erase(chunk)
 				#also need to store it in a file as the chunkdata
 			
 #the chunk builder
 func buildChunk(chunkPos=null):
 	if chunkPos==null:chunkPos=curChunkCenter
 	if loadedChunks.has(chunkPos):return
+	
 	#stores it as an empty chunk for helping out
-	if(!chunkData.has(chunkPos)):storeEmptyChunk(chunkPos)
+	if(!chunkData.has(chunkPos)):chunkData[chunkPos]=SaveSystem.loadChunk(chunkPos)
 	
 	var fullChunkData=[[],[]]
-	var chunkUpdates=[]
+	var chunkUpdates={}
 	for x in chunkSize:for y in chunkSize:
 		#builds the basic cell data
 		var cell=Vector2i(x,y)+chunkPos*chunkSize
+		
 		var cellData=getCellData(cell)
 		
-		var cellID=cellData[0]
-		
+		var cellID=[cellData[0][0],cellData[0][1]]
 		
 		#this resets cell position at the end for adding to the chunk data
 		cell-=chunkPos*chunkSize
-		if cellID==0&&cellData[1][1]:chunkUpdates.push_back(growTree(cell,chunkPos))
-		#sets cellID if it is changed by the chunkdata already
-		if chunkData[chunkPos][x][y]!=-2:cellID=chunkData[chunkPos][x][y]
+		if cellID[0]==0&&cellData[1][1]:
+			chunkUpdates=insertUpdates(chunkUpdates,growTree(cell,chunkPos))
+		#for the default cell before the checks
 		
-		if cellID==-1:continue
-		chunkData[chunkPos][x][y]=cellID
-		#data is input twice for some reason, but it breaks otherwise
-		var inputData=[x+y*65536,cellID,x+y*65536,cellID]
+		#sets cellID if it is changed by the chunkdata already
+		if chunkData[chunkPos][0][x][y]!=-2:cellID[0]=chunkData[chunkPos][0][x][y]
+		if chunkData[chunkPos][1][x][y]!=-2:cellID[1]=chunkData[chunkPos][1][x][y]
+		
+		if chunkPos.x<0:cellID[0]=0
+		chunkData[chunkPos][0][x][y]=cellID[0]
+		chunkData[chunkPos][1][x][y]=cellID[1]
+		
 		#this one should be determined by if it is a cave or not to if it will be done
-		fullChunkData[1].append_array(inputData)
-		#loads the format for each cell in the tilemap array format
-		fullChunkData[0].append_array(inputData)
+		if cellID[1]> -1:
+			fullChunkData[1].append_array([x+y*65536,cellID[1],x+y*65536,cellID[1]])
+		if cellID[0]> -1:
+			fullChunkData[0].append_array([x+y*65536,cellID[0],x+y*65536,cellID[0]])
+		
+	if chunkPos.x<0:
+		chunkUpdates={}
 	
 	#creates the chunk object then adds it to the chunkholder on the main thread
 	var chunk=Chunk2D.new()
@@ -87,25 +99,29 @@ func buildChunk(chunkPos=null):
 	loadedChunks[chunkPos]=chunk
 	#applies trees to the chunks
 	for update in chunkUpdates:
-		updateCellsForChunks(update)
+		updateCellsForChunks(update,chunkUpdates[update])
 
 #gets single cell data for each chunk
 func getCellData(cell):
 	#this deals with getting all the noise values for you
 	var noiseLayers=getNoiseLayers(cell)
+	
 	#use this when adding different biome types
 #	var biome=getBiome()
 	#currently worthless since cell rotation is gone in 4.0
 	var _cellRot=0
 	#id for the cell
 	var cellID=0
+	var cellIDback=0
 	#the ground layer
 	if(noiseLayers[0]>cell.y-64):
 		cellID=-1
+		cellIDback=-1
 	if(noiseLayers[0]<cell.y-64):
 		cellID=1
+		cellIDback=1
 		if(noiseLayers[0]<cell.y-66):cellID=2
-	return [cellID,noiseLayers]
+	return [[cellID,cellIDback],noiseLayers]
 
 
 
@@ -139,16 +155,14 @@ func growTree(cell,chunkPos):
 
 #updates cells in loaded chunks for when they are changed outside the main method
 #pretty much worthless, but it has proven helpful sometimes
-func updateCellsForChunks(chunkAndCells,layer:int=0):
-	for chunk in chunkAndCells:
-		storeEmptyChunk(chunk)
-		if !loadedChunks.has(chunk):continue
-		#every second index is the cell id
-		for cell in chunkAndCells[chunk].size()/2:
-			var cellPos=chunkAndCells[chunk][cell*2]
-			chunkData[chunk][cellPos.x][cellPos.y]=chunkAndCells[chunk][cell*2+1]
-			loadedChunks[chunk].placeTile(true,cellPos,chunkAndCells[chunk][cell*2+1])
-		
+func updateCellsForChunks(chunk,chunkAndCells,layer:int=0):
+	storeEmptyChunk(chunk)
+	if !loadedChunks.has(chunk):return
+	#every second index is the cell id
+	for cell in chunkAndCells.size()/2:
+		var cellPos=chunkAndCells[cell*2]
+		chunkData[chunk][cellPos.x][cellPos.y]=chunkAndCells[cell*2+1]
+		loadedChunks[chunk].placeTile(true,cellPos,chunkAndCells[cell*2+1])
 
 
 
@@ -173,12 +187,21 @@ func getNoiseLayers(cellPos):
 
 func storeEmptyChunk(chunkPos):
 	if chunkData.has(chunkPos):return
-	chunkData[chunkPos]=[]
-	for c in chunkSize:
-		chunkData[chunkPos].push_back([])
-		for d in chunkSize:
-			chunkData[chunkPos][c].push_back(-2)
-
+	chunkData[chunkPos]=[[],[]]
+	for l in 2:
+		for c in chunkPos:
+			chunkData[chunkPos][l].push_back([])
+			for d in chunkSize:
+				chunkData[chunkPos][l][c].push_back(-2)
+#makes an empty chunk for saving
+func makeEmptyChunk():
+	var dat=[[],[]]
+	for l in 2:
+		for c in chunkSize:
+			dat[l].push_back([])
+			for d in chunkSize:
+				dat[l][c].push_back(-2)
+	return dat
 
 #allows me to shrink the dictionary
 func updateDictionary(dic,newDic):
@@ -188,3 +211,11 @@ func updateDictionary(dic,newDic):
 		else:
 			dic[key]=newDic[key]
 	return dic
+
+func insertUpdates(chunkUpdates,chunkUpdateData):
+	for key in chunkUpdateData:
+		if chunkUpdates.has(key):
+			chunkUpdates[key].insert_array(chunkUpdateData[key])
+		else:
+			chunkUpdates[key]=chunkUpdateData[key]
+	return chunkUpdates

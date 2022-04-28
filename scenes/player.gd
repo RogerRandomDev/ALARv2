@@ -16,7 +16,7 @@ var heldImage=Sprite2D.new()
 
 func _ready():
 	add_child(heldImage)
-	
+	print(ItemSystem.get_item_data("Dirt"))
 	heldImage.top_level=true
 	last_chunk=GB.posToChunk(global_position)
 	var timer=Timer.new()

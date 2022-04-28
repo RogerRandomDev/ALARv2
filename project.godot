@@ -18,10 +18,16 @@ _global_script_classes=[{
 "class": &"inventoryObject",
 "language": &"GDScript",
 "path": "res://customObjects/inventory.gd"
+}, {
+"base": "Resource",
+"class": &"item_data",
+"language": &"GDScript",
+"path": "res://customObjects/objectData.gd"
 }]
 _global_script_class_icons={
 "Chunk2D": "",
-"inventoryObject": ""
+"inventoryObject": "",
+"item_data": ""
 }
 
 [application]
@@ -34,6 +40,8 @@ config/features=PackedStringArray("4.0", "Vulkan Clustered")
 [autoload]
 
 GB="*res://global/globalBase.gd"
+SaveSystem="*res://global/save.gd"
+ItemSystem="*res://global/itemData.gd"
 
 [input]
 

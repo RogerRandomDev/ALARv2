@@ -1,0 +1,10 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://bi7aux0ru8mrp"]
+
+[ext_resource type="Script" path="res://customObjects/objectData.gd" id="1_84i8b"]
+
+[resource]
+script = ExtResource( "1_84i8b" )
+item_id = 4
+item_name = ""
+custom_action = ""
+stack_size = 99
