@@ -40,24 +40,38 @@ func _chunkLoad():
 			for chunkY in range(-renderDist,renderDist):
 				buildChunk(curChunkCenter+Vector2i(chunkX,chunkY))
 				keepchunks.push_back(curChunkCenter+Vector2i(chunkX,chunkY))
+				
+		#removes items that are unneedeed
+		for item in GB.itemManager.allItems:
+			var chunk=item.getChunk()
+			if !keepchunks.has(chunk[0]):
+				chunkEntities[chunk[0]].push_back(item.getStored())
+				item.prep_free()
 		#gets rid of unneeded chunks
 		for chunk in loadedChunks.keys():
 			if !keepchunks.has(chunk):
 				var sChunk=loadedChunks[chunk]
-				SaveSystem.saveChunk(chunk,sChunk.getFullData())
+				SaveSystem.saveChunk(chunk,sChunk.getFullData(),chunkEntities[chunk])
 				sChunk.disposeChunk()
 				loadedChunks.erase(chunk)
 				chunkData.erase(chunk)
+				if chunkEntities.has(chunk):
+					chunkEntities.erase(chunk)
 				#also need to store it in a file as the chunkdata
-			
 #the chunk builder
 func buildChunk(chunkPos=null):
 	if chunkPos==null:chunkPos=curChunkCenter
 	if loadedChunks.has(chunkPos):return
 	
 	#stores it as an empty chunk for helping out
-	if(!chunkData.has(chunkPos)):chunkData[chunkPos]=SaveSystem.loadChunk(chunkPos)
-	
+	if(!chunkData.has(chunkPos)):
+		var lChunk=SaveSystem.loadChunk(chunkPos)
+		chunkData[chunkPos]=lChunk[0]
+		chunkEntities[chunkPos]=lChunk[1]
+	if !chunkEntities.has(chunkPos):chunkEntities[chunkPos]=[]
+	else:
+		loadChunkEntities(chunkPos,chunkEntities[chunkPos])
+		chunkEntities[chunkPos]=[]
 	var fullChunkData=[[],[]]
 	var chunkUpdates={}
 	for x in chunkSize:for y in chunkSize:
@@ -94,7 +108,7 @@ func buildChunk(chunkPos=null):
 	#creates the chunk object then adds it to the chunkholder on the main thread
 	var chunk=Chunk2D.new()
 	chunk.fillChunk(fullChunkData,chunkPos)
-	chunkHolder.add_child(chunk)
+	chunkHolder.call_deferred('add_child',chunk)
 	chunk.set_deferred('position',chunkPos*chunkSize*8)
 	loadedChunks[chunkPos]=chunk
 	#applies trees to the chunks
@@ -161,7 +175,7 @@ func updateCellsForChunks(chunk,chunkAndCells,layer:int=0):
 	#every second index is the cell id
 	for cell in chunkAndCells.size()/2:
 		var cellPos=chunkAndCells[cell*2]
-		chunkData[chunk][cellPos.x][cellPos.y]=chunkAndCells[cell*2+1]
+		chunkData[chunk][layer][cellPos.x][cellPos.y]=chunkAndCells[cell*2+1]
 		loadedChunks[chunk].placeTile(true,cellPos,chunkAndCells[cell*2+1])
 
 
@@ -187,6 +201,7 @@ func getNoiseLayers(cellPos):
 
 func storeEmptyChunk(chunkPos):
 	if chunkData.has(chunkPos):return
+	
 	chunkData[chunkPos]=[[],[]]
 	for l in 2:
 		for c in chunkPos:
@@ -195,6 +210,7 @@ func storeEmptyChunk(chunkPos):
 				chunkData[chunkPos][l][c].push_back(-2)
 #makes an empty chunk for saving
 func makeEmptyChunk():
+	
 	var dat=[[],[]]
 	for l in 2:
 		for c in chunkSize:
@@ -219,3 +235,12 @@ func insertUpdates(chunkUpdates,chunkUpdateData):
 		else:
 			chunkUpdates[key]=chunkUpdateData[key]
 	return chunkUpdates
+
+
+
+func loadChunkEntities(chunk,list):
+	for entityData in list:
+		var entity=itemEntity.new()
+		entity.myData=entityData[0]
+		entity.global_position=chunk*128+entityData[1]*8+Vector2i(4,3)
+		chunkHolder.add_child(entity)

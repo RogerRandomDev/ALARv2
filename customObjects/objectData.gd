@@ -7,10 +7,7 @@ class_name item_data
 @export var stack_size:int=99
 @export var item_image:Texture2D=null
 
-func _init():
-	if item_image==null:
-		item_image=load("res://Textures/Tiles/Dirt.png")
-	print("a")
+
 func get_data():
 	return {
 		"stackSize":stack_size,

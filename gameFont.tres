@@ -1,0 +1,6 @@
+[gd_resource type="Font" load_steps=2 format=3 uid="uid://dfxeslvob52bn"]
+
+[ext_resource type="FontData" uid="uid://c42ci7xh5ml5c" path="res://gamefont.TTF" id="1_le8m4"]
+
+[resource]
+data/0 = ExtResource( "1_le8m4" )

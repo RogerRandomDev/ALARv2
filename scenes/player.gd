@@ -1,7 +1,7 @@
 extends CharacterBody2D
 
 
-const SPEED = 64.0
+const SPEED = 128.0
 const JUMP_VELOCITY = -45.
 @onready var sprite=$sprite
 # Get the gravity from the project settings to be synced with RigidDynamicBody nodes.
@@ -16,7 +16,6 @@ var heldImage=Sprite2D.new()
 
 func _ready():
 	add_child(heldImage)
-	print(ItemSystem.get_item_data("Dirt"))
 	heldImage.top_level=true
 	last_chunk=GB.posToChunk(global_position)
 	var timer=Timer.new()
@@ -30,7 +29,7 @@ func _ready():
 	hand._ready()
 
 
-func _physics_process(delta):
+func _process(delta):
 	if hand!=null:hand.update(delta)
 	# Add the gravity.
 	if not is_on_floor():

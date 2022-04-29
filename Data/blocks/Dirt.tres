@@ -5,6 +5,6 @@
 [resource]
 script = ExtResource( "1_84i8b" )
 item_id = 1
-item_name = ""
+item_name = "Dirt"
 custom_action = ""
 stack_size = 99

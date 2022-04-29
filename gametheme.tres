@@ -1,0 +1,33 @@
+[gd_resource type="Theme" load_steps=6 format=3 uid="uid://cda8vuwmpicqd"]
+
+[ext_resource type="Font" uid="uid://dfxeslvob52bn" path="res://gameFont.tres" id="1_r0de0"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ghvsd"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0f87q"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_l34wb"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_2d3v6"]
+
+[resource]
+default_font = ExtResource( "1_r0de0" )
+default_font_size = 8
+GridContainer/constants/hseparation = 12
+GridContainer/constants/vseparation = 12
+ItemList/colors/font_color = Color(0, 0, 0, 1)
+ItemList/colors/font_outline_color = Color(0, 0, 0, 1)
+ItemList/colors/font_selected_color = Color(0, 0, 0, 1)
+ItemList/colors/guide_color = Color(0, 0, 0, 1)
+ItemList/constants/hseparation = 4
+ItemList/constants/icon_margin = 0
+ItemList/constants/line_separation = 0
+ItemList/constants/outline_size = 0
+ItemList/constants/vseparation = 0
+ItemList/font_sizes/font_size = 8
+ItemList/fonts/font = ExtResource( "1_r0de0" )
+ItemList/styles/bg = SubResource( "StyleBoxEmpty_ghvsd" )
+ItemList/styles/bg_focus = SubResource( "StyleBoxEmpty_0f87q" )
+ItemList/styles/cursor_unfocused = null
+ItemList/styles/selected = SubResource( "StyleBoxEmpty_l34wb" )
+ItemList/styles/selected_focus = SubResource( "StyleBoxEmpty_2d3v6" )

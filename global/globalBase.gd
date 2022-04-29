@@ -5,11 +5,14 @@ var chunkAssemble=load("res://global/chunkBuilder.gd").new()
 var playerStats=load("res://global/playerStats.gd").new()
 var player=null
 var moveSprite=null
-
+var itemDropShape=RectangleShape2D.new()
+var itemManager=load("res://global/itemManager.gd").new()
 #the current save file
 var curSave="save0"
-
+var defaultFont=preload("res://gameFont.tres")
 func _ready():
+	itemManager._ready()
+	itemDropShape.extents=Vector2(4,4)
 	makeSavePath()
 	chunkAssemble.chunkHolder=get_tree().current_scene
 	chunkAssemble._ready()
@@ -39,6 +42,7 @@ func mineCellFromChunk(chunk,cell,layer=0):
 	
 	if chunkAssemble.loadedChunks.has(chunk):
 		chunkAssemble.loadedChunks[chunk].mineTile(true,cell)
+	if chunkAssemble.chunkData.has(chunk):
 		chunkAssemble.chunkData[chunk][layer][cell.x][cell.y]=-1
 #gets cell at given point
 func getCellAtPoint(posb,layer=0):
@@ -53,3 +57,11 @@ func makeSavePath():
 	var dir=Directory.new()
 	if !dir.dir_exists(getSavePath()):
 		dir.make_dir_recursive(getSavePath()+"chunks")
+
+var time=0
+func _process(delta):
+	if time>=10:
+		itemManager.process(delta)
+		time-=10
+	else:
+		time+=1

@@ -23,7 +23,7 @@ func placeTile(front:bool,tilePos:Vector2i,tileID:int=0,_tileRot:int=0):
 func mineTile(front:bool,tilePos:Vector2i):
 	var cellMined=get_cell_source_id(int(!front),tilePos,false)
 	var tile_name=get_tile_name(cellMined)
-	print(ItemSystem.get_item_data(tile_name))
+	drop_tile(ItemSystem.get_item_data(tile_name),tilePos)
 	set_cell(int(!front),tilePos,-1,Vector2i(-1,-1),-1)
 
 func getFullData():
@@ -41,3 +41,12 @@ func disposeChunk():
 func get_tile_name(cellMined):
 	var source=tile_set.get_source(cellMined)
 	return source.get_tile_data(Vector2i(0,0), 0).get_custom_data("name")
+
+
+func drop_tile(tile_data,cell):
+	var drop=itemEntity.new()
+	drop.texture=load(tile_data.icon)
+	drop.myData=tile_data
+	drop.myData.count=1
+	drop.global_position=cell*8+Vector2i(4,4)+chunkPos*128
+	get_parent().add_child(drop)

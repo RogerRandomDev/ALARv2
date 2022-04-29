@@ -14,10 +14,20 @@ _global_script_classes=[{
 "language": &"GDScript",
 "path": "res://customObjects/mapChunk.gd"
 }, {
+"base": "Control",
+"class": &"InventoryItem",
+"language": &"GDScript",
+"path": "res://customObjects/inventoryItem.gd"
+}, {
 "base": "Node",
 "class": &"inventoryObject",
 "language": &"GDScript",
 "path": "res://customObjects/inventory.gd"
+}, {
+"base": "Sprite2D",
+"class": &"itemEntity",
+"language": &"GDScript",
+"path": "res://customObjects/itemDrop.gd"
 }, {
 "base": "Resource",
 "class": &"item_data",
@@ -26,7 +36,9 @@ _global_script_classes=[{
 }]
 _global_script_class_icons={
 "Chunk2D": "",
+"InventoryItem": "",
 "inventoryObject": "",
+"itemEntity": "",
 "item_data": ""
 }
 
