@@ -8,6 +8,8 @@ const tileSize=8
 var chunkPos=Vector2i.ZERO
 func _ready():
 	add_layer(1)
+	set_layer_z_index(1,-1)
+	set_layer_modulate(1,Color(0.5,0.5,0.5))
 	tile_set=GB.Tiles
 #fills chunk using the tilemaps array format to make it faster
 func fillChunk(chunkData:Array,myPos):
@@ -19,7 +21,9 @@ func fillChunk(chunkData:Array,myPos):
 
 
 func placeTile(front:bool,tilePos:Vector2i,tileID:int=0,_tileRot:int=0):
+	if get_cell_source_id(!front,tilePos,false)!=-1:return false
 	set_cell(int(!front),tilePos,tileID,Vector2i(0,0),0)
+	return true
 func mineTile(front:bool,tilePos:Vector2i):
 	var cellMined=get_cell_source_id(int(!front),tilePos,false)
 	var tile_name=get_tile_name(cellMined)
@@ -45,8 +49,9 @@ func get_tile_name(cellMined):
 
 func drop_tile(tile_data,cell):
 	var drop=itemEntity.new()
+	tile_data.count=1
 	drop.texture=load(tile_data.icon)
 	drop.myData=tile_data
-	drop.myData.count=1
+	
 	drop.global_position=cell*8+Vector2i(4,4)+chunkPos*128
 	get_parent().add_child(drop)

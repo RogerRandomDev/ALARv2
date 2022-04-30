@@ -65,3 +65,10 @@ func _process(delta):
 		time-=10
 	else:
 		time+=1
+
+
+
+func placeCellInChunk(chunk,cell,id,layer:int=0):
+	if !chunkAssemble.loadedChunks.has(chunk):return
+	var chunk2=chunkAssemble.loadedChunks[chunk]
+	return chunk2.placeTile(!bool(layer),cell,id)

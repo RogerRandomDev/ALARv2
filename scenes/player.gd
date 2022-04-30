@@ -50,7 +50,16 @@ func _process(delta):
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 	animation_handler(direction)
 	move_and_slide()
-
+func _input(_event):
+	var to_hold=-1
+	
+	#changes held item
+	if Input.is_key_pressed(KEY_1):to_hold=0
+	if Input.is_key_pressed(KEY_2):to_hold=1
+	if Input.is_key_pressed(KEY_3):to_hold=2
+	if to_hold!=-1:
+		if inventory.contents[to_hold].name==null:return
+		hold_item_type(ItemSystem.allItems[inventory.contents[to_hold].name],inventory.contents[to_hold].count,to_hold)
 
 func check_chunk():
 	var nchunk=GB.posToChunk(global_position)
@@ -72,3 +81,21 @@ func animation_handler(moving):
 	if is_on_floor()&&velocity.y<0:
 		sprite.playing=true
 		sprite.animation="Jump"
+
+
+
+#switches item holding script when needed
+func hold_item_type(item,holdCount:int=0,slot:int=-1):
+	#if its a drill
+	if item.item_name=="Drill":
+		hand=load("res://holdingScripts/drill.gd").new()
+		hand.holdingImage=heldImage
+		hand._ready()
+	#the final else is for if it is just a block
+	else:
+		hand=load("res://holdingScripts/block.gd").new()
+		hand.holdImage=heldImage
+		hand.holding=item
+		hand.holding.count=holdCount
+		hand._ready()
+		hand.update_holding(slot)

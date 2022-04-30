@@ -4,6 +4,7 @@ extends CanvasLayer
 #runs when the player is fully built so it wont have any errors
 func _ready():
 	player.inventory.connect("update_slot",update_inventory_list)
+	player.inventory.connect("empty_slot",hide_inventory_item)
 	for item in player.inventory.contents:
 		var item_object=InventoryItem.new()
 		$InventoryItems.add_child(item_object)
@@ -20,7 +21,7 @@ func update_inventory_list(slot):
 		var item_content=ItemSystem.get_item_data(item.name)
 		cur_item.data.texture=item_content.icon
 		cur_item.data.count=item.count
-		cur_item.visible=true
+		cur_item.updateVisibility(true)
 		cur_item.update_self()
 func update_all_slots():
 	for itemID in player.inventory.contents.size():
@@ -31,5 +32,8 @@ func update_all_slots():
 		var item_content=ItemSystem.get_item_data(item.name)
 		cur_item.data.texture=item_content.icon
 		cur_item.data.count=item.count
-		cur_item.visible=true
+		cur_item.updateVisibility(true)
 		cur_item.update_self()
+
+func hide_inventory_item(slot):
+	$InventoryItems.get_child(slot).updateVisibility(false)

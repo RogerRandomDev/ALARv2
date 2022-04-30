@@ -20,6 +20,11 @@ _global_script_classes=[{
 "path": "res://customObjects/inventoryItem.gd"
 }, {
 "base": "Node",
+"class": &"folderReader",
+"language": &"GDScript",
+"path": "res://global/folderReader.gd"
+}, {
+"base": "Node",
 "class": &"inventoryObject",
 "language": &"GDScript",
 "path": "res://customObjects/inventory.gd"
@@ -37,6 +42,7 @@ _global_script_classes=[{
 _global_script_class_icons={
 "Chunk2D": "",
 "InventoryItem": "",
+"folderReader": "",
 "inventoryObject": "",
 "itemEntity": "",
 "item_data": ""
@@ -54,6 +60,7 @@ config/features=PackedStringArray("4.0", "Vulkan Clustered")
 GB="*res://global/globalBase.gd"
 SaveSystem="*res://global/save.gd"
 ItemSystem="*res://global/itemData.gd"
+FR="*res://global/folderReader.gd"
 
 [input]
 

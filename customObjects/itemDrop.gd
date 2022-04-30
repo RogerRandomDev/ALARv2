@@ -6,9 +6,10 @@ var myData={}
 var velocity=Vector2.ZERO
 var query=PhysicsShapeQueryParameters2D.new()
 var lbl=Label.new()
+
 #prepares its basic data in main thread, rest of the item system process is done on the itemManager thread
 func _ready():
-	top_level=true;show_on_top=true
+	top_level=true;
 	query.shape=GB.itemDropShape
 	scale=Vector2(0.5,0.5)
 	add_child(lbl)
@@ -18,9 +19,8 @@ func _ready():
 	lbl.position=Vector2(2,2)
 	lbl.theme=load("gametheme.tres")
 	add_to_group("itemEntities")
-	updateCount()
 	texture=load(myData.icon)
-	GB.itemManager.allItems.push_back(self)
+#	GB.itemManager.allItems.push_back(self)
 func _physics_process(delta):
 	query.transform=transform
 	velocity.y+=32*delta
@@ -46,23 +46,21 @@ func updateCount():
 	lbl.text=str(myData.count)
 
 func prep_free():
-	
 	GB.itemManager.allItems.erase(self)
 	queue_free()
 
 func stack_items(item,ignoreRange=false):
-	if item.myData.stackSize<=item.myData.count:return
-	if item.myData.item_name==myData.item_name&&(item.position.distance_squared_to(position)<32||ignoreRange):
+	if item.myData.stackSize<=item.myData.count||item==self:return
+	if item.myData.item_name==myData.item_name:
+		myData.count=myData.count+item.myData.count
 		if myData.count+item.myData.count<=myData.stackSize:
-			myData.count+=item.myData.count
 			item.prep_free()
 		else:
 			var difference=myData.stackSize-myData.count
-			myData.count=myData.stackSize
+#			myData.count=myData.stackSize
 			item.myData.count-=difference
 			item.updateCount()
 		updateCount()
-
 
 #the chunk it resides in
 func getChunk():

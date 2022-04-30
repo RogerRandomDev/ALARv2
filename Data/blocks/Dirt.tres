@@ -8,3 +8,4 @@ item_id = 1
 item_name = "Dirt"
 custom_action = ""
 stack_size = 99
+item_image = null

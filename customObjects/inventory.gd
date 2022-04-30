@@ -45,10 +45,11 @@ func store_item(item,count:int=1):
 
 func pull_item(slotID,count:int=1):
 	if contents[slotID].name==null:return
-	contents[slotID].values()[0]-=count
-	if contents[slotID].values()[0]<=0:
+	contents[slotID].count-=count
+	if contents[slotID].count<=0:
 		contents[slotID].name=null
 		contents[slotID].count=0
 		emit_signal("empty_slot",slotID)
-	
+	else:
+		emit_signal("update_slot",slotID)
 	
