@@ -29,9 +29,13 @@ func readFiles(fileList,location):
 
 #loads the item contents
 func loadItems():
-	var loc="res://Data/blocks/"
+	var loc="res://Data/"
 	var inner=getInnerFile(loc)
 	var returned={}
-	for item in inner:
-		returned[item.split(".")[0]]=load(loc+item).get_data()
+	for folderName in inner:
+		var innerResources=getInnerFile(loc+folderName)
+		for item in innerResources:
+			var it=load(loc+folderName+"/"+item)
+			it.loadSelf()
+			returned[item.split(".")[0]]=it.get_data()
 	return returned

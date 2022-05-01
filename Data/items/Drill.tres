@@ -1,0 +1,11 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://csidx7b0ucvoy"]
+
+[ext_resource type="Script" path="res://customObjects/objectData.gd" id="1_3n6is"]
+
+[resource]
+script = ExtResource( "1_3n6is" )
+item_id = -1
+item_name = "Drill"
+custom_action = ""
+stack_size = 1
+item_image = "Tools/DrillBasic.png"

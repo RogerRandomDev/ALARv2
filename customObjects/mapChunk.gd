@@ -49,9 +49,7 @@ func get_tile_name(cellMined):
 
 func drop_tile(tile_data,cell):
 	var drop=itemEntity.new()
-	tile_data.count=1
-	drop.texture=load(tile_data.icon)
+	drop.sprite.texture=load(tile_data.icon)
 	drop.myData=tile_data
-	
 	drop.global_position=cell*8+Vector2i(4,4)+chunkPos*128
 	get_parent().add_child(drop)

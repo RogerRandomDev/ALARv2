@@ -13,12 +13,19 @@ func update_holding(slot:int=-1):
 	inventory_slot=slot
 	if !holding.has("icon"):return
 	holdImage.texture=load(holding.icon)
-	holdImage.centered=false
+	holdImage.visible=true
 	holdImage.region_enabled=true
-func update(delta):
+func update(_delta):
 	if holding=={}:return
+	var holdPos=player.get_global_mouse_position()
+	holdPos-=player.global_position
+	holdImage.global_position=Vector2(GB.posToCell(holdPos+player.global_position))
+	if holdPos.length_squared()>576:
+		holdImage.global_position=Vector2(GB.posToCell(holdPos.normalized()*24+player.global_position))
 	if Input.is_mouse_button_pressed(1):
-		var placePos=GB.posToChunkAndCell(holdImage.get_global_mouse_position())
+		var placePos=GB.posToChunkAndCell(holdImage.global_position)
+			
+		if placePos==GB.posToChunkAndCell(player.global_position):return
 		#returns false if the cell wasnt placed
 		var placed=GB.placeCellInChunk(placePos[0],placePos[1],holding.item_id)
 		if placed:

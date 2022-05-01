@@ -8,3 +8,4 @@ item_id = 2
 item_name = "Stone"
 custom_action = ""
 stack_size = 99
+item_image = null

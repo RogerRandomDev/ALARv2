@@ -22,6 +22,8 @@ func update_inventory_list(slot):
 		cur_item.data.texture=item_content.icon
 		cur_item.data.count=item.count
 		cur_item.updateVisibility(true)
+		if item_content.stackSize<=1:cur_item.counter.visible=false
+		else:cur_item.counter.visible=true
 		cur_item.update_self()
 func update_all_slots():
 	for itemID in player.inventory.contents.size():

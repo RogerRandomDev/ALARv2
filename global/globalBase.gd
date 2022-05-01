@@ -12,7 +12,7 @@ var curSave="save0"
 var defaultFont=preload("res://gameFont.tres")
 func _ready():
 	itemManager._ready()
-	itemDropShape.extents=Vector2(4,4)
+	itemDropShape.extents=Vector2(2,2)
 	makeSavePath()
 	chunkAssemble.chunkHolder=get_tree().current_scene
 	chunkAssemble._ready()

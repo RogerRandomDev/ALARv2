@@ -29,7 +29,7 @@ _global_script_classes=[{
 "language": &"GDScript",
 "path": "res://customObjects/inventory.gd"
 }, {
-"base": "Sprite2D",
+"base": "RigidDynamicBody2D",
 "class": &"itemEntity",
 "language": &"GDScript",
 "path": "res://customObjects/itemDrop.gd"
@@ -83,6 +83,7 @@ up={
 
 [physics]
 
+2d/physics_engine="GodotPhysics2D"
 2d/default_gravity=64.0
 
 [rendering]

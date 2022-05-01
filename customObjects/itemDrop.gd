@@ -1,39 +1,46 @@
-extends Sprite2D
+extends RigidDynamicBody2D
 
 class_name itemEntity
 
-var myData={}
-var velocity=Vector2.ZERO
+var myData={"count":1}
+
 var query=PhysicsShapeQueryParameters2D.new()
 var lbl=Label.new()
-
+var sprite=Sprite2D.new()
 #prepares its basic data in main thread, rest of the item system process is done on the itemManager thread
 func _ready():
-	top_level=true;
-	query.shape=GB.itemDropShape
-	scale=Vector2(0.5,0.5)
+	lock_rotation=true
+	can_sleep=false
+	myData=myData.duplicate(true)
+	if myData.count<1:myData.count=1
+	var col=CollisionShape2D.new()
+	col.shape=GB.itemDropShape
+	collision_layer=5
+	add_child(col);add_child(sprite)
+	query.shape=GB.itemDropShape.duplicate(true)
+	query.shape.extents*=2
+	query.collision_mask=1
+	sprite.scale=Vector2(0.5,0.5)
 	add_child(lbl)
 	for item in get_tree().get_nodes_in_group("itemEntities"):
 		if item.myData.item_name==myData.item_name&&item.position.distance_squared_to(position)<512:
-			stack_items(item,true)
+			stack_items(item)
 	lbl.position=Vector2(2,2)
+	lbl.scale=Vector2(0.5,0.5)
 	lbl.theme=load("gametheme.tres")
 	add_to_group("itemEntities")
-	texture=load(myData.icon)
-#	GB.itemManager.allItems.push_back(self)
-func _physics_process(delta):
+	sprite.texture=load(myData.icon)
+	GB.itemManager.allItems.push_back(self)
+func _physics_process(_delta):
 	query.transform=transform
-	velocity.y+=32*delta
 	var colliding:=get_world_2d().direct_space_state.intersect_shape(query)
 	if colliding:
-		velocity.y=0
 		check_overlap(colliding)
-	position+=velocity*delta
 #this is the threaded part
 func check_overlapping_items():
 	for item in GB.itemManager.allItems:
 		if item==self:continue
-		stack_items(item)
+#		stack_items(item)
 
 func check_overlap(overlapping):
 	for object in overlapping:
@@ -49,19 +56,19 @@ func prep_free():
 	GB.itemManager.allItems.erase(self)
 	queue_free()
 
-func stack_items(item,ignoreRange=false):
+func stack_items(item):
 	if item.myData.stackSize<=item.myData.count||item==self:return
-	if item.myData.item_name==myData.item_name:
-		myData.count=myData.count+item.myData.count
-		if myData.count+item.myData.count<=myData.stackSize:
+	var itemData=item.myData
+	if itemData.item_name==myData.item_name:
+		myData.count+=itemData.count
+		if myData.count<=myData.stackSize:
 			item.prep_free()
 		else:
-			var difference=myData.stackSize-myData.count
-#			myData.count=myData.stackSize
+			var difference=myData.stackSize-myData.count+item.myData.count
+			myData.count=myData.stackSize
 			item.myData.count-=difference
 			item.updateCount()
-		updateCount()
-
+	updateCount()
 #the chunk it resides in
 func getChunk():
 	return GB.posToChunkAndCell(global_position)

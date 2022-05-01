@@ -13,6 +13,7 @@ dest_files=["res://.godot/imported/gamefont.TTF-c38f61745c53f3c9f9df27e455336447
 [params]
 
 antialiased=true
+generate_mipmaps=false
 multichannel_signed_distance_field=false
 msdf_pixel_range=8
 msdf_size=48

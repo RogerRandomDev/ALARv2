@@ -13,8 +13,8 @@
 [resource]
 default_font = ExtResource( "1_r0de0" )
 default_font_size = 8
-GridContainer/constants/hseparation = 12
-GridContainer/constants/vseparation = 12
+GridContainer/constants/hseparation = 4
+GridContainer/constants/vseparation = 4
 ItemList/colors/font_color = Color(0, 0, 0, 1)
 ItemList/colors/font_outline_color = Color(0, 0, 0, 1)
 ItemList/colors/font_selected_color = Color(0, 0, 0, 1)

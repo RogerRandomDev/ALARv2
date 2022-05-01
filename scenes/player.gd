@@ -51,14 +51,22 @@ func _process(delta):
 	animation_handler(direction)
 	move_and_slide()
 func _input(_event):
-	var to_hold=-1
-	
 	#changes held item
-	if Input.is_key_pressed(KEY_1):to_hold=0
-	if Input.is_key_pressed(KEY_2):to_hold=1
-	if Input.is_key_pressed(KEY_3):to_hold=2
+	if _event is InputEventKey:update_hand(_event.keycode)
+
+func update_hand(key):
+	var to_hold=-1
+	match key:
+		49:to_hold=0
+		50:to_hold=1
+		51:to_hold=2
+		52:to_hold=3
+		53:to_hold=4
+		54:to_hold=5
 	if to_hold!=-1:
-		if inventory.contents[to_hold].name==null:return
+		if inventory.contents[to_hold].name==null:
+			hold_item_type({"item_name":"empty"})
+			return
 		hold_item_type(ItemSystem.allItems[inventory.contents[to_hold].name],inventory.contents[to_hold].count,to_hold)
 
 func check_chunk():
@@ -86,10 +94,15 @@ func animation_handler(moving):
 
 #switches item holding script when needed
 func hold_item_type(item,holdCount:int=0,slot:int=-1):
+	item=item.duplicate(true)
+	#this is to handle empty hands
+	if item.item_name=="empty":
+		hand=load("res://holdingScripts/empty.gd").new()
+		return
 	#if its a drill
 	if item.item_name=="Drill":
 		hand=load("res://holdingScripts/drill.gd").new()
-		hand.holdingImage=heldImage
+		hand.holdImage=heldImage
 		hand._ready()
 	#the final else is for if it is just a block
 	else:
