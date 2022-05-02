@@ -31,6 +31,7 @@ func _ready():
 	add_to_group("itemEntities")
 	sprite.texture=load(myData.icon)
 	GB.itemManager.allItems.push_back(self)
+	updateCount()
 func _physics_process(_delta):
 	query.transform=transform
 	var colliding:=get_world_2d().direct_space_state.intersect_shape(query)

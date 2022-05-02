@@ -98,6 +98,7 @@ func hold_item_type(item,holdCount:int=0,slot:int=-1):
 	#this is to handle empty hands
 	if item.item_name=="empty":
 		hand=load("res://holdingScripts/empty.gd").new()
+		heldImage.visible=false
 		return
 	#if its a drill
 	if item.item_name=="Drill":

@@ -8,3 +8,5 @@ item_id = 0
 item_name = "Grass"
 custom_action = ""
 stack_size = 99
+item_image = ""
+drop_item = "Dirt"

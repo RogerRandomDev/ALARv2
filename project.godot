@@ -61,6 +61,7 @@ GB="*res://global/globalBase.gd"
 SaveSystem="*res://global/save.gd"
 ItemSystem="*res://global/itemData.gd"
 FR="*res://global/folderReader.gd"
+Audio="*res://global/SoundHandler.gd"
 
 [input]
 

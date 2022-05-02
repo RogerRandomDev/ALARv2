@@ -6,6 +6,7 @@ var holdImage=null
 var mining_point=Vector2.ZERO
 func _ready():
 	holdImage.texture=mineTexture
+	holdImage.visible=true
 	holdImage.centered=false
 	holdImage.region_enabled=true
 func update(delta):
