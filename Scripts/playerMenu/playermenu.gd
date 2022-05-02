@@ -22,7 +22,7 @@ func update_inventory_list(slot):
 	else:
 		var cur_item=$Inventory/InventoryItems.get_child(slot)
 		var item=player.inventory.contents[slot]
-		if item.name==null||item.count==0:
+		if item.name==null||item.count==0||item.icon==null:
 			cur_item.updateVisibility(false)
 			return
 		var item_content=ItemSystem.get_item_data(item.name)
@@ -40,7 +40,9 @@ func update_all_slots():
 		var cur_item=$Inventory/InventoryItems.get_child(itemID)
 		var item=player.inventory.contents[itemID]
 		if item.name==null:continue
-		
+		if item.name==null||item.count==0||item.icon==null:
+			cur_item.updateVisibility(false)
+			return
 		var item_content=ItemSystem.get_item_data(item.name)
 		cur_item.data.texture=item_content.icon
 		cur_item.data.count=item.count

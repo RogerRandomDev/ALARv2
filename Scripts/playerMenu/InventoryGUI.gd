@@ -21,6 +21,7 @@ var hovered_grab=null
 func _input(_event):
 	if Input.is_action_just_pressed("lmouse")&&hovered_item!=null:
 		var new_data={"name":null,"count":0,"icon":null}
+		print(get_parent().player.inventory.contents[hovered_item_point])
 		if hovered_grab!=null:
 			new_data=hovered_grab.myData
 			
