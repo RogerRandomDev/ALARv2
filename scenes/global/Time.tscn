@@ -1,0 +1,54 @@
+[gd_scene load_steps=4 format=3 uid="uid://bmkn111ltwfoa"]
+
+[ext_resource type="Script" path="res://scenes/global/timeAnimator.gd" id="1_1nqpj"]
+
+[sub_resource type="Animation" id="Animation_hqf8p"]
+resource_name = "time"
+length = 30.0
+loop_mode = 1
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("timeAnimator")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"values": [{
+"args": ["Day"],
+"method": &"setCurTime"
+}, {
+"args": ["Night"],
+"method": &"setCurTime"
+}, {
+"args": ["Dusk"],
+"method": &"setCurTime"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_22r5h"]
+_data = {
+"time": SubResource( "Animation_hqf8p" )
+}
+
+[node name="Time" type="Node2D"]
+z_index = -6
+
+[node name="timeModulate" type="CanvasModulate" parent="."]
+
+[node name="timeAnimator" type="AnimationPlayer" parent="."]
+playback_speed = 0.1
+libraries = {
+"": SubResource( "AnimationLibrary_22r5h" )
+}
+script = ExtResource( "1_1nqpj" )
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = -1
+
+[node name="Sky" type="ColorRect" parent="CanvasLayer"]
+show_behind_parent = true
+minimum_size = Vector2(1024, 600)
+offset_right = 1024.0
+offset_bottom = 600.0

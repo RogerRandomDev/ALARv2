@@ -35,7 +35,8 @@ func loadItems():
 	for folderName in inner:
 		var innerResources=getInnerFile(loc+folderName)
 		for item in innerResources:
-			var it=load(loc+folderName+"/"+item)
+			if item.count(".")>1:continue
+			var it=load(loc+folderName+"/%s"%item)
 			it.loadSelf()
 			returned[item.split(".")[0]]=it.get_data()
 	return returned

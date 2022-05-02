@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dta4i48dx3lsk"
-path="res://.godot/imported/ItemHolder.png-325556f1d253b676c49e1edc619eda84.ctex"
+uid="uid://dmlols0umevur"
+path="res://.godot/imported/inventoryRect.png-c164c7a6925a969a63017710daee7800.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Textures/Tiles/ItemHolder.png"
-dest_files=["res://.godot/imported/ItemHolder.png-325556f1d253b676c49e1edc619eda84.ctex"]
+source_file="res://Textures/Menu/inventoryRect.png"
+dest_files=["res://.godot/imported/inventoryRect.png-c164c7a6925a969a63017710daee7800.ctex"]
 
 [params]
 

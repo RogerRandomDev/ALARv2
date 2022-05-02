@@ -13,10 +13,11 @@ const max_slots=32
 
 #still need to work on this system
 func _ready():
-	for slot in max_slots:contents.push_back({"name":null,"count":1})
+	for slot in max_slots:contents.push_back({"name":null,"count":1,"icon":null})
 	contents=contents.duplicate(true)
 	call_deferred('store_item',"Drill")
 
+func set_slot(slot,data):contents[slot]=data
 
 func store_item(item,count:int=1):
 	var count_left=count
@@ -41,7 +42,7 @@ func store_item(item,count:int=1):
 		first_empty=contents[first_empty]
 		first_empty.name=item
 		first_empty.count=count_left
-		
+		first_empty.icon=itemData.icon
 		emit_signal("update_slot",chosen_slot)
 
 func pull_item(slotID,count:int=1):

@@ -1,10 +1,10 @@
-[gd_resource type="Resource" load_steps=2 format=3 uid="uid://ctd0px3ihemjq"]
+[gd_resource type="Resource" load_steps=2 format=3]
 
 [ext_resource type="Script" path="res://customResources/objectData.gd" id="1_84i8b"]
 
 [resource]
 script = ExtResource( "1_84i8b" )
-item_id = 3
-item_name = "Log"
+item_id = 4
+item_name = "Leaves"
 custom_action = ""
 stack_size = 99

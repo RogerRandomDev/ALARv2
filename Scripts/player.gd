@@ -19,7 +19,7 @@ func _ready():
 	heldImage.top_level=true
 	last_chunk=GB.posToChunk(global_position)
 	var timer=Timer.new()
-	timer.wait_time=0.5
+	timer.wait_time=0.25
 	timer.autostart=true
 	timer.connect('timeout',check_chunk)
 	add_child(timer)

@@ -41,7 +41,7 @@ func _physics_process(_delta):
 func check_overlapping_items():
 	for item in GB.itemManager.allItems:
 		if item==self:continue
-#		stack_items(item)
+		stack_items(item)
 
 func check_overlap(overlapping):
 	for object in overlapping:
@@ -61,6 +61,7 @@ func stack_items(item):
 	if item.myData.stackSize<=item.myData.count||item==self:return
 	var itemData=item.myData
 	if itemData.item_name==myData.item_name:
+		if (item.global_position-global_position).length_squared()>128:return
 		myData.count+=itemData.count
 		if myData.count<=myData.stackSize:
 			item.prep_free()

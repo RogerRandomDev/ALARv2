@@ -1,4 +1,4 @@
-[gd_resource type="Resource" load_steps=2 format=3 uid="uid://cn5oistqixfre"]
+[gd_resource type="Resource" load_steps=2 format=3]
 
 [ext_resource type="Script" path="res://customResources/objectData.gd" id="1_o0pmg"]
 
@@ -10,4 +10,3 @@ custom_action = ""
 stack_size = 99
 item_image = ""
 drop_item = "Dirt"
-drop_count = 1

@@ -1,8 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://kqcc78wtbh2x"]
+[gd_scene load_steps=5 format=3]
 
 [ext_resource type="Script" path="res://Scripts/playerMenu/playermenu.gd" id="1_ptd06"]
-[ext_resource type="Script" path="res://Scripts/playerMenu/InventoryGUI.gd" id="2_0f8o6"]
 [ext_resource type="Theme" uid="uid://cda8vuwmpicqd" path="res://gametheme.tres" id="2_ohgc5"]
+[ext_resource type="Script" path="res://Scripts/playerMenu/InventoryGUI.gd" id="2_yl8mb"]
 [ext_resource type="Texture2D" uid="uid://dmlols0umevur" path="res://Textures/Menu/inventoryRect.png" id="3_oa0uo"]
 
 [node name="playerMenu" type="CanvasLayer"]
@@ -15,7 +15,7 @@ script = ExtResource( "1_ptd06" )
 process_priority = 3
 offset_right = 40.0
 offset_bottom = 40.0
-script = ExtResource( "2_0f8o6" )
+script = ExtResource( "2_yl8mb" )
 
 [node name="inventoryBack" type="NinePatchRect" parent="Inventory"]
 minimum_size = Vector2(52, 16)
