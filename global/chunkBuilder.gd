@@ -1,7 +1,7 @@
 extends Node
 #we need to put the noise functions here
 var terrainNoise0=preload("res://terrainNoise/terrainNoise0.tres")
-
+var caveNoise0=preload("res://terrainNoise/caveNoise0.tres")
 
 
 

@@ -46,8 +46,7 @@ func check_overlapping_items():
 func check_overlap(overlapping):
 	for object in overlapping:
 		if object.collider.name=="Player":
-			object.collider.inventory.store_item(myData.item_name,myData.count)
-			prep_free()
+			if object.collider.inventory.store_item(myData.item_name,myData.count):prep_free()
 
 
 func updateCount():

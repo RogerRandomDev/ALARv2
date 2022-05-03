@@ -45,8 +45,11 @@ func store_item(item,count:int=1):
 		first_empty.name=item
 		first_empty.count=count_left
 		first_empty.icon=itemData.icon
+		count_left=0
 		emit_signal("update_slot",chosen_slot)
-
+	if count_left>0&&first_empty==-1:
+		return false
+	return true
 func pull_item(slotID,count:int=1):
 	if contents[slotID].name==null:return
 	contents[slotID].count-=count

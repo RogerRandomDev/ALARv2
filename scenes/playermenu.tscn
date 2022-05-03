@@ -29,6 +29,8 @@ patch_margin_right = 14
 patch_margin_bottom = 2
 axis_stretch_horizontal = 1
 axis_stretch_vertical = 1
+metadata/_edit_layout_mode = 0
+metadata/_edit_use_custom_anchors = false
 
 [node name="InventoryItems" type="GridContainer" parent="Inventory"]
 minimum_size = Vector2(44, 8)
