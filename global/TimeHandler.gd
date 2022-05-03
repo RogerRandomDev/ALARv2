@@ -5,7 +5,7 @@ func _enter_tree():
 	get_tree().connect("node_added",on_scene_change)
 
 
-func on_scene_change(a):
+func on_scene_change(_a):
 	if get_tree().current_scene.name!="worldBase":
 		myTime=null
 		return

@@ -17,7 +17,9 @@ func _ready():
 	contents=contents.duplicate(true)
 	call_deferred('store_item',"Drill")
 
-func set_slot(slot,data):contents[slot]=data
+func set_slot(slot,data):
+	contents[slot]=data
+	emit_signal("update_slot",slot)
 
 func store_item(item,count:int=1):
 	var count_left=count

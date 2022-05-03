@@ -4,13 +4,13 @@
 
 [resource]
 script = ExtResource( "1_a4wmi" )
-DayTime = 0.0
+DayTime = 1.0
 DayColor = Color(0.552941, 0.968627, 1, 1)
 DayColorMod = Color(1, 1, 1, 1)
-DuskTime = 0.625
+DuskTime = 0.125
 DuskColor = Color(0.843137, 0.541176, 0.278431, 1)
 DuskColorMod = Color(0.815686, 0.317647, 0.337255, 1)
-NightTime = 0.75
+NightTime = 0.25
 NightColor = Color(0.192157, 0.192157, 0.192157, 1)
 NightColorMod = Color(0.168627, 0.176471, 0.168627, 1)
 backgroundDarkness = 1.0

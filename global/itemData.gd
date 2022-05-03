@@ -2,7 +2,7 @@ extends Node
 
 
 var allItems={}
-
+var allRecipes={}
 
 func _ready():
 	allItems=FR.loadItems()

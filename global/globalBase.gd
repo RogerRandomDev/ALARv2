@@ -1,15 +1,18 @@
 extends Node
 
 const Tiles=preload("res://gameTiles.tres")
+
 var chunkAssemble=load("res://global/chunkBuilder.gd").new()
 var playerStats=load("res://global/playerStats.gd").new()
 var player=null
 var moveSprite=null
+var in_inventory=false
 var itemDropShape=RectangleShape2D.new()
 var itemManager=load("res://global/itemManager.gd").new()
 #the current save file
 var curSave="save0"
 var defaultFont=preload("res://gameFont.tres")
+var theme=load("res://gametheme.tres")
 func _ready():
 	itemManager._ready()
 	itemDropShape.extents=Vector2(2,2)

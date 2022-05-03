@@ -1,7 +1,6 @@
-extends Node
+extends handBase
 
 
-var holdImage=null
 var place_point=Vector2.ZERO
 var holding={}
 var inventory_slot=-1
@@ -9,13 +8,15 @@ var player=null
 func _ready():
 	player=holdImage.get_parent()
 	update_holding()
+	super._ready()
 func update_holding(slot:int=-1):
 	inventory_slot=slot
 	if !holding.has("icon"):return
 	holdImage.texture=load(holding.icon)
 	holdImage.visible=true
 	holdImage.region_enabled=true
-func update(_delta):
+func update(_delta=0.0):
+	if super.update():return
 	if holding=={}:return
 	var holdPos=player.get_global_mouse_position()
 	holdPos-=player.global_position

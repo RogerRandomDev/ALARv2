@@ -1,15 +1,17 @@
-extends Node
+extends handBase
 
 var mineTexture=preload("res://Textures/MineSheet.png")
 var progress=0.0;
-var holdImage=null
+
 var mining_point=Vector2.ZERO
 func _ready():
 	holdImage.texture=mineTexture
 	holdImage.visible=true
 	holdImage.centered=false
 	holdImage.region_enabled=true
-func update(delta):
+	super._ready()
+func update(delta=0.0):
+	if super.update():return
 	if Input.is_mouse_button_pressed(1):
 		holdImage.visible=true
 		progress+=delta*GB.playerStats.mineSpeed

@@ -19,6 +19,11 @@ _global_script_classes=[{
 "language": &"GDScript",
 "path": "res://customObjects/inventoryItem.gd"
 }, {
+"base": "Resource",
+"class": &"Recipe",
+"language": &"GDScript",
+"path": "res://customResources/itemRecipe.gd"
+}, {
 "base": "Sprite2D",
 "class": &"dragItem",
 "language": &"GDScript",
@@ -28,6 +33,11 @@ _global_script_classes=[{
 "class": &"folderReader",
 "language": &"GDScript",
 "path": "res://global/folderReader.gd"
+}, {
+"base": "Node",
+"class": &"handBase",
+"language": &"GDScript",
+"path": "res://holdingScripts/handBase.gd"
 }, {
 "base": "Node",
 "class": &"inventoryObject",
@@ -52,8 +62,10 @@ _global_script_classes=[{
 _global_script_class_icons={
 "Chunk2D": "",
 "InventoryItem": "",
+"Recipe": "",
 "dragItem": "",
 "folderReader": "",
+"handBase": "",
 "inventoryObject": "",
 "itemEntity": "",
 "item_data": "",

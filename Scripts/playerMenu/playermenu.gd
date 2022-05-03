@@ -57,14 +57,15 @@ func hide_inventory_item(slot):
 func update_inventory_menu():
 	for item in player.inventory.contents.size():
 		if item >5&&!in_inventory:
-			$Inventory/InventoryItems.get_child(item).updateVisibility(false)
+			$Inventory/InventoryItems.get_child(item).visible=false
 		else:
-			$Inventory/InventoryItems.get_child(item).updateVisibility(true)
+			$Inventory/InventoryItems.get_child(item).visible=true
 	var size=Vector2(4,4)+Vector2((6+int(in_inventory)*2)*12,(1+int(in_inventory)*3)*12)
 	$Inventory/inventoryBack.size=size
 
 
-func _input(event):
+func _input(_event):
 	if Input.is_action_just_pressed("interact"):
 		in_inventory=!in_inventory
+		GB.in_inventory=in_inventory
 		update_inventory_menu()
