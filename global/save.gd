@@ -14,3 +14,17 @@ func loadChunk(chunkPos):
 	var content=str2var(file.get_as_text())
 	file.close()
 	return content
+
+#deals with entities outside of a loaded chunk so it is simpler on me
+func insertEntitiesToChunk(chunk,entityset):
+	var path=GB.getSavePath()+"chunks/%s.dat"%chunk
+	var contents=""
+	if !file.file_exists(path):contents=[GB.chunkAssemble.makeEmptyChunk(),[]]
+	else:
+		file.open(path,File.READ)
+		contents=str2var(file.get_as_text())
+		file.close()
+	contents[1].append_array(entityset)
+	file.open(path,File.WRITE)
+	file.store_line(var2str(contents))
+	file.close()

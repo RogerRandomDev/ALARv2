@@ -1,33 +1,68 @@
-[gd_resource type="Theme" load_steps=6 format=3 uid="uid://cda8vuwmpicqd"]
+[gd_resource type="Theme" load_steps=11 format=3 uid="uid://cda8vuwmpicqd"]
 
 [ext_resource type="Font" uid="uid://dfxeslvob52bn" path="res://gameFont.tres" id="1_r0de0"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ghvsd"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4gdyd"]
+bg_color = Color(0.196078, 0.196078, 0.196078, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_bottom = 1
+border_color = Color(0.121569, 0.121569, 0.121569, 1)
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0f87q"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dmnh0"]
+bg_color = Color(0.196078, 0.196078, 0.196078, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_bottom = 1
+border_color = Color(0.121569, 0.121569, 0.121569, 1)
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_l34wb"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_2d3v6"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5fbqa"]
+bg_color = Color(0.341176, 0.341176, 0.341176, 1)
+border_color = Color(0.8, 0.8, 0.8, 0)
+expand_margin_left = 4.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7la4g"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bikgd"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jjtt7"]
+expand_margin_left = 4.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_blce3"]
 
 [resource]
 default_font = ExtResource( "1_r0de0" )
 default_font_size = 8
 GridContainer/constants/hseparation = 4
 GridContainer/constants/vseparation = 4
-ItemList/colors/font_color = Color(0, 0, 0, 1)
+ItemList/colors/font_color = Color(0.180392, 1, 0.0901961, 1)
 ItemList/colors/font_outline_color = Color(0, 0, 0, 1)
-ItemList/colors/font_selected_color = Color(0, 0, 0, 1)
-ItemList/colors/guide_color = Color(0, 0, 0, 1)
-ItemList/constants/hseparation = 4
+ItemList/colors/font_selected_color = Color(0.180392, 1, 0.0901961, 1)
+ItemList/colors/guide_color = Color(0.278431, 0.666667, 0.207843, 1)
+ItemList/constants/h_separation = 4
 ItemList/constants/icon_margin = 0
 ItemList/constants/line_separation = 0
-ItemList/constants/outline_size = 0
-ItemList/constants/vseparation = 0
+ItemList/constants/outline_size = 4
+ItemList/constants/v_separation = 2
 ItemList/font_sizes/font_size = 8
 ItemList/fonts/font = ExtResource( "1_r0de0" )
-ItemList/styles/bg = SubResource( "StyleBoxEmpty_ghvsd" )
-ItemList/styles/bg_focus = SubResource( "StyleBoxEmpty_0f87q" )
+ItemList/styles/bg = SubResource( "StyleBoxFlat_4gdyd" )
+ItemList/styles/bg_focus = SubResource( "StyleBoxFlat_dmnh0" )
 ItemList/styles/cursor_unfocused = null
 ItemList/styles/selected = SubResource( "StyleBoxEmpty_l34wb" )
 ItemList/styles/selected_focus = SubResource( "StyleBoxEmpty_2d3v6" )
+VScrollBar/icons/decrement = null
+VScrollBar/icons/decrement_highlight = null
+VScrollBar/icons/decrement_pressed = null
+VScrollBar/icons/increment = null
+VScrollBar/icons/increment_highlight = null
+VScrollBar/icons/increment_pressed = null
+VScrollBar/styles/grabber = SubResource( "StyleBoxFlat_5fbqa" )
+VScrollBar/styles/grabber_highlight = SubResource( "StyleBoxFlat_7la4g" )
+VScrollBar/styles/grabber_pressed = SubResource( "StyleBoxFlat_bikgd" )
+VScrollBar/styles/scroll = SubResource( "StyleBoxFlat_jjtt7" )
+VScrollBar/styles/scroll_focus = SubResource( "StyleBoxFlat_blce3" )

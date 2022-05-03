@@ -1,11 +1,11 @@
-extends Control
+extends VBoxContainer
 
 
 func _ready():
 	call_deferred("loaded")
 func loaded():
-	for id in $InventoryItems.get_child_count():
-		var child = $InventoryItems.get_child(id)
+	for id in $inventoryBack/InventoryItems.get_child_count():
+		var child = $inventoryBack/InventoryItems.get_child(id)
 		child.connect("mouse_entered",self.hover_item,[child,id])
 		child.connect("mouse_exited",self.stop_hover_item,[child])
 
@@ -37,7 +37,11 @@ func _input(_event):
 				if gone:
 					hovered_grab=null
 		get_parent().player.inventory.set_slot(hovered_item_point,new_data)
-	
+	else:if Input.is_action_just_pressed("lmouse")&&hovered_grab!=null:
+		var hovered_data=hovered_grab.myData
+		hovered_grab.queue_free()
+		hovered_grab=null
+		
 func grab_item():
 	if hovered_item.data.texture==null:
 		return

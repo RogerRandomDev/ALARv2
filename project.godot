@@ -14,6 +14,11 @@ _global_script_classes=[{
 "language": &"GDScript",
 "path": "res://customObjects/mapChunk.gd"
 }, {
+"base": "Node",
+"class": &"CraftingSystem",
+"language": &"GDScript",
+"path": "res://global/CraftingHandler.gd"
+}, {
 "base": "Control",
 "class": &"InventoryItem",
 "language": &"GDScript",
@@ -61,6 +66,7 @@ _global_script_classes=[{
 }]
 _global_script_class_icons={
 "Chunk2D": "",
+"CraftingSystem": "",
 "InventoryItem": "",
 "Recipe": "",
 "dragItem": "",

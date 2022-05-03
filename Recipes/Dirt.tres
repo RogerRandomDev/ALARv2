@@ -4,6 +4,6 @@
 
 [resource]
 script = ExtResource( "1_e73xh" )
-output_name = null
-input_list = PackedStringArray()
-input_count = PackedInt32Array()
+output_name = "Dirt"
+input_list = PackedStringArray("Dirt")
+input_count = PackedInt32Array(1)

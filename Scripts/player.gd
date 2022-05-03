@@ -16,6 +16,7 @@ var heldImage=Sprite2D.new()
 
 func _ready():
 	add_child(heldImage)
+	GB.player=self
 	heldImage.top_level=true
 	last_chunk=GB.posToChunk(global_position)
 	var timer=Timer.new()

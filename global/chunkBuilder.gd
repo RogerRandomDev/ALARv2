@@ -58,6 +58,10 @@ func _chunkLoad():
 				if chunkEntities.has(chunk):
 					chunkEntities.erase(chunk)
 				#also need to store it in a file as the chunkdata
+		#this deals with entities outside chunks
+		for entity in chunkEntities:
+			if !keepchunks.has(entity):
+				SaveSystem.insertEntitiesToChunk(entity,chunkEntities[entity])
 #the chunk builder
 func buildChunk(chunkPos=null):
 	if chunkPos==null:chunkPos=curChunkCenter

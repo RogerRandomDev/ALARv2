@@ -40,3 +40,15 @@ func loadItems():
 			it.loadSelf()
 			returned[item.split(".")[0]]=it.get_data()
 	return returned
+
+
+#loads item recipes
+func loadRecipes():
+	var loc="res://Recipes/"
+	var inner=getInnerFile(loc)
+	var returned=[]
+	for folderName in inner:
+		var recipe=load(loc+folderName)
+		var inp=recipe.get_recipe()
+		returned.push_back(inp)
+	return returned

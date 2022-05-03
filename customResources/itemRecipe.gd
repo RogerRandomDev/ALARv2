@@ -11,5 +11,5 @@ func get_recipe():
 	var input={}
 	for item in input_list.size():
 		input[input_list[item]]=input_count[item]
-	var output={"out":output_name,"in":input}
+	var output={"out":output_name,"input":input}
 	return output

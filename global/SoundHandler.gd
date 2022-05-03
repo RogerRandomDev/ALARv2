@@ -21,5 +21,6 @@ func start_song(song_name):
 	tween.parallel().tween_property(n_song,"volume_db",0.,0.25)
 	sounds.push_back(n_song)
 	add_child(n_song)
+	n_song.process_mode=Node.PROCESS_MODE_ALWAYS
 	n_song.play()
 	

@@ -7,18 +7,24 @@ var myData={"count":1}
 var query=PhysicsShapeQueryParameters2D.new()
 var lbl=Label.new()
 var sprite=Sprite2D.new()
+var lifeTime=0.0
+var c=null
 #prepares its basic data in main thread, rest of the item system process is done on the itemManager thread
 func _ready():
 	lock_rotation=true
 	can_sleep=false
+	
 	myData=myData.duplicate(true)
 	if myData.count<1:myData.count=1
 	var col=CollisionShape2D.new()
+	c=col
 	col.shape=GB.itemDropShape
-	collision_layer=5
+	collision_layer=4
+	collision_mask=4
+	contact_monitor=true
+	contacts_reported=4
 	add_child(col);add_child(sprite)
-	query.shape=GB.itemDropShape.duplicate(true)
-	query.shape.extents*=2
+	query.shape=GB.itemDropShape
 	query.collision_mask=1
 	sprite.scale=Vector2(0.5,0.5)
 	add_child(lbl)
@@ -33,6 +39,8 @@ func _ready():
 	GB.itemManager.allItems.push_back(self)
 	updateCount()
 func _physics_process(_delta):
+	c.disabled=false
+	lifeTime+=_delta
 	query.transform=transform
 	var colliding:=get_world_2d().direct_space_state.intersect_shape(query)
 	if colliding:
@@ -45,9 +53,12 @@ func check_overlapping_items():
 
 func check_overlap(overlapping):
 	for object in overlapping:
-		if object.collider.name=="Player":
+		if object.collider.name=="Player"&&lifeTime>0.5:
 			if object.collider.inventory.store_item(myData.item_name,myData.count):prep_free()
-
+			continue
+		if object.collider.get_class()=="TileMap":
+			linear_velocity.y=min(linear_velocity.y,0)-2.5
+			c.disabled=true
 
 func updateCount():
 	lbl.text=str(myData.count)

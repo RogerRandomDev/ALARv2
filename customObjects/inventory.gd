@@ -59,4 +59,10 @@ func pull_item(slotID,count:int=1):
 		emit_signal("empty_slot",slotID)
 	else:
 		emit_signal("update_slot",slotID)
-	
+#returns all unique items in inventory
+func get_owned_items():
+	var output=[]
+	for item in contents:
+		if item.name!=null&&!output.has(item.name):
+			output.push_back(item.name)
+	return output

@@ -3,13 +3,16 @@ extends CanvasLayer
 @onready var player=get_parent().get_node("Player")
 
 var in_inventory=false
+signal inventory_opened
+signal inventory_closed
+
 #runs when the player is fully built so it wont have any errors
 func _ready():
 	player.inventory.connect("update_slot",update_inventory_list)
 	player.inventory.connect("empty_slot",hide_inventory_item)
 	for item in player.inventory.contents:
 		var item_object=InventoryItem.new()
-		$Inventory/InventoryItems.add_child(item_object)
+		$Inventory/inventoryBack/InventoryItems.add_child(item_object)
 		
 	update_inventory_menu()
 
@@ -20,7 +23,7 @@ func update_inventory_list(slot):
 	if slot==-1:
 		update_all_slots()
 	else:
-		var cur_item=$Inventory/InventoryItems.get_child(slot)
+		var cur_item=$Inventory/inventoryBack/InventoryItems.get_child(slot)
 		var item=player.inventory.contents[slot]
 		if item.name==null||item.count==0||item.icon==null:
 			cur_item.updateVisibility(false)
@@ -37,7 +40,7 @@ func update_inventory_list(slot):
 #updates all
 func update_all_slots():
 	for itemID in player.inventory.contents.size():
-		var cur_item=$Inventory/InventoryItems.get_child(itemID)
+		var cur_item=$Inventory/inventoryBack/InventoryItems.get_child(itemID)
 		var item=player.inventory.contents[itemID]
 		if item.name==null:continue
 		if item.name==null||item.count==0||item.icon==null:
@@ -51,17 +54,25 @@ func update_all_slots():
 
 #hides an inventory item
 func hide_inventory_item(slot):
-	$Inventory/InventoryItems.get_child(slot).updateVisibility(false)
+	$Inventory/inventoryBack/InventoryItems.get_child(slot).updateVisibility(false)
 
 #updates menu for inventory
 func update_inventory_menu():
 	for item in player.inventory.contents.size():
 		if item >5&&!in_inventory:
-			$Inventory/InventoryItems.get_child(item).visible=false
+			$Inventory/inventoryBack/InventoryItems.get_child(item).visible=false
 		else:
-			$Inventory/InventoryItems.get_child(item).visible=true
+			$Inventory/inventoryBack/InventoryItems.get_child(item).visible=true
 	var size=Vector2(4,4)+Vector2((6+int(in_inventory)*2)*12,(1+int(in_inventory)*3)*12)
-	$Inventory/inventoryBack.size=size
+	$Inventory/inventoryBack.minimum_size=size
+	$Inventory/Crafting.visible=in_inventory
+	if in_inventory:
+		process_mode=Node.PROCESS_MODE_ALWAYS
+		emit_signal("inventory_opened")
+	else:
+		process_mode=Node.PROCESS_MODE_INHERIT
+		emit_signal("inventory_closed")
+	get_tree().paused=in_inventory
 
 
 func _input(_event):
