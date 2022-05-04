@@ -1,0 +1,13 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://ctwjl4qm0xiqk"]
+
+[ext_resource type="Script" path="res://customResources/objectData.gd" id="1_sho88"]
+
+[resource]
+script = ExtResource( "1_sho88" )
+item_id = -1
+item_name = "Raw Iron"
+custom_action = ""
+stack_size = 99
+item_image = "Iron Ore"
+drop_item = ""
+drop_count = 1

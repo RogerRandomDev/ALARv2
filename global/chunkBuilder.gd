@@ -2,7 +2,8 @@ extends Node
 #we need to put the noise functions here
 var terrainNoise0=preload("res://terrainNoise/terrainNoise0.tres")
 var caveNoise0=preload("res://terrainNoise/caveNoise0.tres")
-
+var caveNoise1=preload("res://terrainNoise/caveNoise1.tres")
+var oreNoise0=preload("res://terrainNoise/oreNoise0.tres")
 
 
 
@@ -139,6 +140,8 @@ func getCellData(cell):
 		cellID=1
 		cellIDback=1
 		if(noiseLayers[0]<cell.y-66):cellID=2
+	if(noiseLayers[2]<1):
+		cellID=-1
 	return [[cellID,cellIDback],noiseLayers]
 
 
@@ -200,7 +203,9 @@ func getNoiseLayers(cellPos):
 		#for the ground level
 		round(terrainNoise0.get_noise_1d(cellPos.x)*baseTerrainStrength),
 		#for placing trees
-		terrainNoise0.get_noise_1d(cellPos.x*10)>0.25
+		terrainNoise0.get_noise_1d(cellPos.x*10)>0.25,
+		#the cave noise
+		abs(caveNoise0.get_noise_2d(cellPos.x,cellPos.y)))+abs(caveNoise1.get_noise_2d(cellPos.x,cellPos.y)
 		]
 
 func storeEmptyChunk(chunkPos):
