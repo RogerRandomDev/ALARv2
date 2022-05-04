@@ -1,0 +1,21 @@
+[gd_scene load_steps=2 format=3 uid="uid://bhrb3hyf70yfl"]
+
+[sub_resource type="GDScript" id="GDScript_ytn23"]
+script/source = "extends Sprite2D
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	var build=load(\"res://global/chunkBuilder.gd\").new()
+	var tex=Image.new()
+	tex.create(128,128,false,Image.FORMAT_RGB8)
+	for x in 128:for y in 128:
+		tex.set_pixel(x,y,Color(build.getCellData(Vector2(x,y))[0][0],0,0))
+	var img= ImageTexture.new()
+	img.create_from_image(tex)
+	texture=img
+"
+
+[node name="Sprite2D" type="Sprite2D"]
+centered = false
+script = SubResource( "GDScript_ytn23" )

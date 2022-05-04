@@ -7,6 +7,7 @@ func saveChunk(chunkPos,chunkData,chunkEntities):
 	file.open(GB.getSavePath()+"chunks/%s.dat"%chunkPos,File.WRITE)
 	file.store_string(var2str([chunkData,chunkEntities]))
 	file.close()
+
 func loadChunk(chunkPos):
 	var path=GB.getSavePath()+"chunks/%s.dat"%chunkPos
 	if !file.file_exists(path):return [GB.chunkAssemble.makeEmptyChunk(),[]]

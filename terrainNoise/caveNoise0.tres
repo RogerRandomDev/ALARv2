@@ -1,9 +1,15 @@
 [gd_resource type="FastNoiseLite" format=3 uid="uid://b4x27v1qxihd1"]
 
 [resource]
-frequency = 0.005
-fractal_type = 2
+noise_type = 3
+frequency = 0.015
 fractal_octaves = 3
-fractal_lacunarity = 1.461
-cellular_distance_function = 1
-domain_warp_enabled = true
+fractal_ping_pong_strength = 1.67
+cellular_jitter = 2.741
+cellular_return_type = 0
+domain_warp_type = 2
+domain_warp_amplitude = 17.732
+domain_warp_frequency = 0.025
+domain_warp_fractal_octaves = 4
+domain_warp_fractal_lacunarity = 3.773
+domain_warp_fractal_gain = 0.404

@@ -4,7 +4,10 @@
 
 [resource]
 script = ExtResource( "1_84i8b" )
-item_id = 4
+item_id = 5
 item_name = "Leaves"
 custom_action = ""
 stack_size = 99
+item_image = ""
+drop_item = ""
+drop_count = 1

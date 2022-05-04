@@ -29,7 +29,7 @@ func mineTile(front:bool,tilePos:Vector2i):
 	var tile_name=get_tile_name(cellMined)
 	drop_tile(ItemSystem.get_item_data(tile_name),tilePos)
 	set_cell(int(!front),tilePos,-1,Vector2i(-1,-1),-1)
-
+	GB.lighting.update_chunk_tile(tilePos,chunkPos,false)
 func getFullData():
 	var data=[[],[]]
 	for l in 2:

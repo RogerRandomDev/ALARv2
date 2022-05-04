@@ -10,3 +10,7 @@ process_priority = -1
 position = Vector2(283, 124)
 
 [node name="playerMenu" parent="." instance=ExtResource( "2_2mg0a" )]
+
+[node name="LightingBackground" type="Sprite2D" parent="."]
+scale = Vector2(8, 8)
+z_index = 4

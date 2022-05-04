@@ -38,9 +38,15 @@ func _input(_event):
 					hovered_grab=null
 		get_parent().player.inventory.set_slot(hovered_item_point,new_data)
 	else:if Input.is_action_just_pressed("lmouse")&&hovered_grab!=null:
+		if hovered_grab.myData.get("name")==null||hovered_grab.myData.get("name")=="Drill":return
 		var hovered_data=hovered_grab.myData
 		hovered_grab.queue_free()
 		hovered_grab=null
+		var item=itemEntity.new()
+		item.myData=ItemSystem.get_item_data(hovered_data.name)
+		item.myData.count=hovered_data.count
+		GB.player.get_parent().add_child(item)
+		item.global_position=GB.player.global_position
 		
 func grab_item():
 	if hovered_item.data.texture==null:

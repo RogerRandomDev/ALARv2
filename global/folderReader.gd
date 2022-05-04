@@ -28,8 +28,7 @@ func readFiles(fileList,location):
 
 
 #loads the item contents
-func loadItems():
-	var loc="res://Data/"
+func loadItems(loc="res://Data/"):
 	var inner=getInnerFile(loc)
 	var returned={}
 	for folderName in inner:
@@ -43,8 +42,7 @@ func loadItems():
 
 
 #loads item recipes
-func loadRecipes():
-	var loc="res://Recipes/"
+func loadRecipes(loc="res://Recipes/"):
 	var inner=getInnerFile(loc)
 	var returned=[]
 	for folderName in inner:

@@ -2,8 +2,8 @@ extends Node
 #we need to put the noise functions here
 var terrainNoise0=preload("res://terrainNoise/terrainNoise0.tres")
 var caveNoise0=preload("res://terrainNoise/caveNoise0.tres")
-
-
+var caveNoise1=preload("res://terrainNoise/caveNoise0.tres").duplicate(true)
+var caveDepthNoise=preload("res://terrainNoise/caveDepth0.tres")
 
 
 
@@ -23,12 +23,12 @@ var chunkHolder=null
 var baseTerrainStrength=32
 
 
-
 #thread for chunkloading
 var thread=Thread.new()
 var semaphore=Semaphore.new()
 #prepares thread
 func _ready():
+	caveNoise1.seed+=1
 	thread.start(_chunkLoad)
 #does chunk loading using a separate thread to make game run more smoothly
 func _chunkLoad():
@@ -62,6 +62,9 @@ func _chunkLoad():
 		for entity in chunkEntities:
 			if !keepchunks.has(entity):
 				SaveSystem.insertEntitiesToChunk(entity,chunkEntities[entity])
+		GB.lighting.centerChunk=curChunkCenter
+		GB.lighting.chunkList=loadedChunks
+		GB.lighting.s.call_deferred('post')
 #the chunk builder
 func buildChunk(chunkPos=null):
 	if chunkPos==null:chunkPos=curChunkCenter
@@ -88,7 +91,7 @@ func buildChunk(chunkPos=null):
 		
 		#this resets cell position at the end for adding to the chunk data
 		cell-=chunkPos*chunkSize
-		if cellID[0]==0&&cellData[1][1]:
+		if cellID[0]==1&&cellData[1]:
 			chunkUpdates=insertUpdates(chunkUpdates,growTree(cell,chunkPos))
 		#for the default cell before the checks
 		
@@ -96,7 +99,7 @@ func buildChunk(chunkPos=null):
 		if chunkData[chunkPos][0][x][y]!=-2:cellID[0]=chunkData[chunkPos][0][x][y]
 		if chunkData[chunkPos][1][x][y]!=-2:cellID[1]=chunkData[chunkPos][1][x][y]
 		
-		if chunkPos.x<0:cellID[0]=0
+		if chunkPos.x<0:cellID[0]=1
 		chunkData[chunkPos][0][x][y]=cellID[0]
 		chunkData[chunkPos][1][x][y]=cellID[1]
 		
@@ -129,17 +132,18 @@ func getCellData(cell):
 	#currently worthless since cell rotation is gone in 4.0
 	var _cellRot=0
 	#id for the cell
-	var cellID=0
-	var cellIDback=0
+	var cellID=1
+	var cellIDback=1
 	#the ground layer
 	if(noiseLayers[0]>cell.y-64):
 		cellID=-1
 		cellIDback=-1
 	if(noiseLayers[0]<cell.y-64):
-		cellID=1
-		cellIDback=1
-		if(noiseLayers[0]<cell.y-66):cellID=2
-	return [[cellID,cellIDback],noiseLayers]
+		cellID=2
+		cellIDback=2
+		if(noiseLayers[0]<cell.y-66):cellID=3
+	if noiseLayers[2]&&noiseLayers[3]< -1.175+cell.y/60:cellID=-1
+	return [[cellID,cellIDback],noiseLayers[1]]
 
 
 
@@ -156,9 +160,9 @@ func growTree(cell,chunkPos):
 	var curChunk=chunkPos
 	for y in treeSize:
 		#default log
-		var cellID=3
+		var cellID=4
 		#the leaves
-		if y+3>treeSize:cellID=4
+		if y+3>treeSize:cellID=5
 		cell.y-=1
 		if cell.y<0:
 			cell.y+=16
@@ -200,7 +204,10 @@ func getNoiseLayers(cellPos):
 		#for the ground level
 		round(terrainNoise0.get_noise_1d(cellPos.x)*baseTerrainStrength),
 		#for placing trees
-		terrainNoise0.get_noise_1d(cellPos.x*10)>0.25
+		terrainNoise0.get_noise_1d(cellPos.x*10)>0.25,
+		#cave generation noise
+		caveNoise2D(cellPos.x,cellPos.y),
+		caveDepthNoise.get_noise_2dv(cellPos)
 		]
 
 func storeEmptyChunk(chunkPos):
@@ -248,3 +255,15 @@ func loadChunkEntities(chunk,list):
 		entity.myData=entityData[0]
 		entity.global_position=chunk*128+entityData[1]*8+Vector2i(4,3)
 		chunkHolder.add_child(entity)
+
+
+func caveNoise2D(x,y):
+	var a      : float = (caveNoise0.get_noise_2d(x, y) + 1.0) / 2.0
+	var b      : float = (caveNoise1.get_noise_2d(x, y) + 1.0) / 2.0
+	var border : float = 0.625
+
+	return(float(
+		a >= (0.6) and
+		b >= (1.0 - border)      and
+		b <= (-2.0 * border / (0.125 - 2.0))
+	))

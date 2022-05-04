@@ -4,6 +4,7 @@ const Tiles=preload("res://gameTiles.tres")
 
 var chunkAssemble=load("res://global/chunkBuilder.gd").new()
 var playerStats=load("res://global/playerStats.gd").new()
+var lighting=load("res://global/lightingSystem.gd").new()
 var player=null
 var moveSprite=null
 var in_inventory=false
@@ -19,6 +20,7 @@ func _ready():
 	makeSavePath()
 	chunkAssemble.chunkHolder=get_tree().current_scene
 	chunkAssemble._ready()
+	lighting.call_deferred('_ready')
 #this sets the current chunk to load, then activates the chunkloader
 func loadChunk(chunkPos):
 	chunkAssemble.curChunkCenter=chunkPos
@@ -42,7 +44,7 @@ func posToChunkAndCell(global):
 
 #mines cell from chunk
 func mineCellFromChunk(chunk,cell,layer=0):
-	
+	if chunkAssemble.chunkData[chunk][layer][cell.x][cell.y]==0:return
 	if chunkAssemble.loadedChunks.has(chunk):
 		chunkAssemble.loadedChunks[chunk].mineTile(true,cell)
 	if chunkAssemble.chunkData.has(chunk):
@@ -60,6 +62,7 @@ func makeSavePath():
 	var dir=Directory.new()
 	if !dir.dir_exists(getSavePath()):
 		dir.make_dir_recursive(getSavePath()+"chunks")
+		dir.make_dir_recursive(getSavePath()+"data")
 
 var time=0
 func _process(delta):

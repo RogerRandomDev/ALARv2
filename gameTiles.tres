@@ -1,10 +1,21 @@
-[gd_resource type="TileSet" load_steps=11 format=3 uid="uid://80246xad1qhr"]
+[gd_resource type="TileSet" load_steps=13 format=3 uid="uid://80246xad1qhr"]
 
+[ext_resource type="Texture2D" uid="uid://c6wlgwo4g0uut" path="res://Textures/Tools/DrillBasic.png" id="1_2jkk5"]
 [ext_resource type="Texture2D" uid="uid://i803fmm2ofxw" path="res://Textures/Tiles/Grass.png" id="1_4mure"]
 [ext_resource type="Texture2D" uid="uid://bbbix80qab50d" path="res://Textures/Tiles/Dirt.png" id="2_p4k4r"]
 [ext_resource type="Texture2D" uid="uid://cwwovxk54ebn4" path="res://Textures/Tiles/Stone.png" id="3_76qar"]
 [ext_resource type="Texture2D" uid="uid://cfktehj7wke4x" path="res://Textures/Tiles/Log.png" id="4_xcvtd"]
 [ext_resource type="Texture2D" uid="uid://bmgi2qo1julir" path="res://Textures/Tiles/Leaves.png" id="5_x8v7r"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_a54pj"]
+resource_name = "Air"
+texture = ExtResource( "1_2jkk5" )
+texture_region_size = Vector2i(2, 2)
+0:0/0 = 0
+0:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+0:0/0/physics_layer_0/angular_velocity = 0.0
+0:0/0/physics_layer_1/linear_velocity = Vector2(0, 0)
+0:0/0/physics_layer_1/angular_velocity = 0.0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_bi1hq"]
 resource_name = "Grass"
@@ -73,8 +84,9 @@ physics_layer_1/collision_layer = 0
 physics_layer_1/collision_mask = 0
 custom_data_layer_0/name = "name"
 custom_data_layer_0/type = 4
-sources/0 = SubResource( "TileSetAtlasSource_bi1hq" )
-sources/1 = SubResource( "TileSetAtlasSource_55mmc" )
-sources/2 = SubResource( "TileSetAtlasSource_tet1p" )
-sources/3 = SubResource( "TileSetAtlasSource_aakcq" )
-sources/4 = SubResource( "TileSetAtlasSource_h7icr" )
+sources/0 = SubResource( "TileSetAtlasSource_a54pj" )
+sources/1 = SubResource( "TileSetAtlasSource_bi1hq" )
+sources/2 = SubResource( "TileSetAtlasSource_55mmc" )
+sources/3 = SubResource( "TileSetAtlasSource_tet1p" )
+sources/4 = SubResource( "TileSetAtlasSource_aakcq" )
+sources/5 = SubResource( "TileSetAtlasSource_h7icr" )
