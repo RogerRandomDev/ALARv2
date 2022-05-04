@@ -1,4 +1,4 @@
-extends VBoxContainer
+extends Control
 
 
 func _ready():
@@ -22,11 +22,11 @@ func _input(_event):
 	if hovered_item!=null&&Input.is_action_just_pressed("lmouse"):
 		var new_data={"name":null,"count":0,"icon":null}
 		if hovered_grab!=null:
-			new_data=hovered_grab.myData
+			new_data=hovered_grab.myData.duplicate(true)
 			hovered_grab.queue_free()
 			hovered_grab=null
 		grab_item()
-		if hovered_grab!=null&&hovered_grab.myData.name==new_data.name:
+		if hovered_grab!=null&&hovered_grab.myData.name==new_data.name&&new_data.name!=null:
 			var data=ItemSystem.get_item_data(new_data.name)
 			var difference=data.stackSize-new_data.count-hovered_grab.myData.count
 			var added=new_data.count+hovered_grab.myData.count
@@ -38,6 +38,7 @@ func _input(_event):
 					hovered_grab=null
 		get_parent().player.inventory.set_slot(hovered_item_point,new_data)
 	else:if Input.is_action_just_pressed("lmouse")&&hovered_grab!=null:
+<<<<<<< HEAD
 		if hovered_grab.myData.get("name")==null||hovered_grab.myData.get("name")=="Drill":return
 		var hovered_data=hovered_grab.myData
 		hovered_grab.queue_free()
@@ -48,6 +49,13 @@ func _input(_event):
 		GB.player.get_parent().add_child(item)
 		item.global_position=GB.player.global_position
 		
+=======
+		if hovered_grab.myData.name=="Drill":return
+		var hovered_data=hovered_grab.myData
+		hovered_grab.queue_free()
+		hovered_grab=null
+		drop_item(hovered_data)
+>>>>>>> 410affe50b52150f84235c01553f82cd2690243c
 func grab_item():
 	if hovered_item.data.texture==null:
 		return
@@ -60,3 +68,6 @@ func grab_item():
 	add_child(grabbed)
 	hovered_grab=grabbed
 
+
+func drop_item(item_data_in):
+	pass

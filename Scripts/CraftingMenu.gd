@@ -12,3 +12,9 @@ func _ready():
 func load_recipes():
 	crafting.cur_function="load_available_items"
 	crafting.s.post()
+
+
+func choose_item(index):
+	crafting.cur_function_data=[$List.get_item_text(index),index]
+	crafting.cur_function="load_recipe_selected"
+	crafting.s.post()

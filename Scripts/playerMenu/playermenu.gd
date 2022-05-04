@@ -66,6 +66,7 @@ func update_inventory_menu():
 	var size=Vector2(4,4)+Vector2((6+int(in_inventory)*2)*12,(1+int(in_inventory)*3)*12)
 	$Inventory/inventoryBack.minimum_size=size
 	$Inventory/Crafting.visible=in_inventory
+	$Inventory/Craftlabel.visible=in_inventory
 	if in_inventory:
 		process_mode=Node.PROCESS_MODE_ALWAYS
 		emit_signal("inventory_opened")
