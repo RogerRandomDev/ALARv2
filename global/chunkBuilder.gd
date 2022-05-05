@@ -2,15 +2,8 @@ extends Node
 #we need to put the noise functions here
 var terrainNoise0=preload("res://terrainNoise/terrainNoise0.tres")
 var caveNoise0=preload("res://terrainNoise/caveNoise0.tres")
-<<<<<<< HEAD
 var caveNoise1=preload("res://terrainNoise/caveNoise0.tres").duplicate(true)
 var caveDepthNoise=preload("res://terrainNoise/caveDepth0.tres")
-=======
-var caveNoise1=preload("res://terrainNoise/caveNoise1.tres")
-var oreNoise0=preload("res://terrainNoise/oreNoise0.tres")
-
->>>>>>> 410affe50b52150f84235c01553f82cd2690243c
-
 
 
 #these are used for storing chunk data and whatnot
@@ -71,6 +64,7 @@ func _chunkLoad():
 		GB.lighting.centerChunk=curChunkCenter
 		GB.lighting.chunkList=loadedChunks
 		GB.lighting.s.call_deferred('post')
+		GB.player.active=true
 #the chunk builder
 func buildChunk(chunkPos=null):
 	if chunkPos==null:chunkPos=curChunkCenter
@@ -145,20 +139,11 @@ func getCellData(cell):
 		cellID=-1
 		cellIDback=-1
 	if(noiseLayers[0]<cell.y-64):
-<<<<<<< HEAD
 		cellID=2
 		cellIDback=2
 		if(noiseLayers[0]<cell.y-66):cellID=3
-	if noiseLayers[2]&&noiseLayers[3]< -1.175+cell.y/60:cellID=-1
+	if noiseLayers[2]:cellID=-1
 	return [[cellID,cellIDback],noiseLayers[1]]
-=======
-		cellID=1
-		cellIDback=1
-		if(noiseLayers[0]<cell.y-66):cellID=2
-	if(noiseLayers[2]<1):
-		cellID=-1
-	return [[cellID,cellIDback],noiseLayers]
->>>>>>> 410affe50b52150f84235c01553f82cd2690243c
 
 
 
@@ -220,14 +205,8 @@ func getNoiseLayers(cellPos):
 		round(terrainNoise0.get_noise_1d(cellPos.x)*baseTerrainStrength),
 		#for placing trees
 		terrainNoise0.get_noise_1d(cellPos.x*10)>0.25,
-<<<<<<< HEAD
 		#cave generation noise
-		caveNoise2D(cellPos.x,cellPos.y),
-		caveDepthNoise.get_noise_2dv(cellPos)
-=======
-		#the cave noise
-		abs(caveNoise0.get_noise_2d(cellPos.x,cellPos.y)))+abs(caveNoise1.get_noise_2d(cellPos.x,cellPos.y)
->>>>>>> 410affe50b52150f84235c01553f82cd2690243c
+		caveNoise2D(cellPos.x,cellPos.y)
 		]
 
 func storeEmptyChunk(chunkPos):
@@ -280,10 +259,10 @@ func loadChunkEntities(chunk,list):
 func caveNoise2D(x,y):
 	var a      : float = (caveNoise0.get_noise_2d(x, y) + 1.0) / 2.0
 	var b      : float = (caveNoise1.get_noise_2d(x, y) + 1.0) / 2.0
-	var border : float = 0.625
-
+	var border : float = 1.0-0.375*max(min(y/90,1.5),0.5)
+	var persistence:float=1.0-0.375*min(y/90,1.5)
 	return(float(
-		a >= (0.6) and
+		a >= (persistence) and
 		b >= (1.0 - border)      and
 		b <= (-2.0 * border / (0.125 - 2.0))
 	))

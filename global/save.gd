@@ -2,6 +2,7 @@ extends Node
 
 var file=File.new()
 
+
 func saveChunk(chunkPos,chunkData,chunkEntities):
 	if chunkPos.x<0:return
 	file.open(GB.getSavePath()+"chunks/%s.dat"%chunkPos,File.WRITE)
@@ -29,3 +30,25 @@ func insertEntitiesToChunk(chunk,entityset):
 	file.open(path,File.WRITE)
 	file.store_line(var2str(contents))
 	file.close()
+
+
+func loadWorld():
+	var path=GB.getSavePath()
+	if !file.file_exists(path+"data/playerData.dat"):return
+	file.open(path+"data/playerData.dat",File.READ)
+	var dataset=str2var(file.get_as_text())
+	GB.player.global_position=dataset.position
+	GB.player.active=false
+	GB.player.inventory.contents=dataset.inventory
+
+func saveWorld():
+	var path=GB.getSavePath()
+	file.open(path+"data/playerData.dat",File.WRITE)
+	var dataset={"position":GB.player.global_position,
+	"inventory":GB.player.inventory.contents}
+	file.store_string(var2str(dataset))
+	file.close()
+
+
+func _input(event):
+	if Input.is_action_just_pressed("interact"):saveWorld()

@@ -1,8 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://bs3pihilya0fj"]
+[gd_scene load_steps=4 format=3]
 
 [ext_resource type="PackedScene" uid="uid://bldy6iwv01ufn" path="res://scenes/player.tscn" id="1_fctrf"]
 [ext_resource type="PackedScene" uid="uid://kqcc78wtbh2x" path="res://scenes/playermenu.tscn" id="2_2mg0a"]
-[ext_resource type="Material" uid="uid://eewebfg0vna3" path="res://Shaders/lightingshader.tres" id="3_ry5yb"]
+[ext_resource type="Material" path="res://Shaders/lightingshader.tres" id="3_yb4fs"]
 
 [node name="worldBase" type="Node2D"]
 
@@ -13,6 +13,6 @@ position = Vector2(283, 124)
 [node name="playerMenu" parent="." instance=ExtResource( "2_2mg0a" )]
 
 [node name="LightingBackground" type="Sprite2D" parent="."]
-material = ExtResource( "3_ry5yb" )
+material = ExtResource( "3_yb4fs" )
 scale = Vector2(8, 8)
 z_index = 4

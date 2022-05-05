@@ -94,6 +94,10 @@ FR="*res://global/folderReader.gd"
 Audio="*res://global/SoundHandler.gd"
 TimeHandler="*res://global/TimeHandler.gd"
 
+[display]
+
+window/stretch/mode="viewport"
+
 [input]
 
 left={

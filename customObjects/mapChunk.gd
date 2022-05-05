@@ -23,6 +23,7 @@ func fillChunk(chunkData:Array,myPos):
 func placeTile(front:bool,tilePos:Vector2i,tileID:int=0,_tileRot:int=0):
 	if get_cell_source_id(!front,tilePos,false)!=-1:return false
 	set_cell(int(!front),tilePos,tileID,Vector2i(0,0),0)
+	GB.lighting.update_chunk_tile(tilePos,chunkPos,true)
 	return true
 func mineTile(front:bool,tilePos:Vector2i):
 	var cellMined=get_cell_source_id(int(!front),tilePos,false)

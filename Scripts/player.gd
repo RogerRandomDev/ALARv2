@@ -13,8 +13,9 @@ var hand=null
 var inventory=load("res://customObjects/inventory.gd").new()
 var heldImage=Sprite2D.new()
 
-
+var active=true
 func _ready():
+	TimeHandler.connect("change_time",update_time)
 	add_child(heldImage)
 	GB.player=self
 	heldImage.top_level=true
@@ -23,7 +24,7 @@ func _ready():
 	timer.wait_time=0.25
 	timer.autostart=true
 	timer.connect('timeout',check_chunk)
-	add_child(timer)
+	call_deferred('add_child',timer)
 	inventory._ready()
 	hand=load("res://holdingScripts/drill.gd").new()
 	hand.holdImage=heldImage
@@ -31,6 +32,7 @@ func _ready():
 
 
 func _process(delta):
+	if !active:return
 	if hand!=null:hand.update(delta)
 	# Add the gravity.
 	if not is_on_floor():
@@ -114,3 +116,9 @@ func hold_item_type(item,holdCount:int=0,slot:int=-1):
 		hand.holding.count=holdCount
 		hand._ready()
 		hand.update_holding(slot)
+
+
+
+func update_time(cur_time:String,time_color:Color):
+	var tween:Tween=create_tween()
+	tween.tween_property($Sprite2D,"self_modulate",Color.WHITE-time_color+Color(0,0,0,cur_time!="Day"),1.5)

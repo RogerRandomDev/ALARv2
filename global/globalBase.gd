@@ -21,6 +21,7 @@ func _ready():
 	chunkAssemble.chunkHolder=get_tree().current_scene
 	chunkAssemble._ready()
 	lighting.call_deferred('_ready')
+	SaveSystem.call_deferred("loadWorld")
 #this sets the current chunk to load, then activates the chunkloader
 func loadChunk(chunkPos):
 	chunkAssemble.curChunkCenter=chunkPos
@@ -78,3 +79,4 @@ func placeCellInChunk(chunk,cell,id,layer:int=0):
 	if !chunkAssemble.loadedChunks.has(chunk):return
 	var chunk2=chunkAssemble.loadedChunks[chunk]
 	return chunk2.placeTile(!bool(layer),cell,id)
+	

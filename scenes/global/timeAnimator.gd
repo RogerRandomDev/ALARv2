@@ -4,7 +4,7 @@ extends AnimationPlayer
 var timeData=load("res://WorldData/time.tres")
 var allAlter=null
 var sky=null
-
+var root=null
 func _ready():
 	sky=get_parent().get_node("CanvasLayer/Sky")
 	allAlter=get_parent().get_node("timeModulate")
@@ -22,6 +22,8 @@ func buildTimeAnimation():
 
 
 func setCurTime(timeName:String):
+	
 	var tween:Tween=create_tween()
 	tween.tween_property(sky,"color",timeData.get(timeName+"Color"),1.5)
 	tween.parallel().tween_property(allAlter,"color",timeData.get(timeName+"ColorMod"),1.5)
+	root.emit_signal("change_time",timeName,timeData.get(timeName+"Color"))
