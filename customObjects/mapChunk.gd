@@ -33,7 +33,7 @@ func mineTile(front:bool,tilePos:Vector2i):
 	GB.lighting.update_chunk_tile(tilePos,chunkPos,false)
 func getFullData():
 	var data=[[],[]]
-	for l in 2:
+	for l in get_layers_count():
 		for x in 16:
 			data[l].push_back([])
 			for y in 16:
@@ -53,7 +53,6 @@ func drop_tile(tile_data,cell):
 	if tile_data.item_drop!="":tile_data=ItemSystem.get_item_data(tile_data.item_drop)
 	
 	var drop=itemEntity.new()
-	drop.sprite.texture=load(tile_data.icon)
 	drop.myData=tile_data
 	drop.myData.count=dropped_count
 	drop.global_position=cell*8+Vector2i(4,4)+chunkPos*128

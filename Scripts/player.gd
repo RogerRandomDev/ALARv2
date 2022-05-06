@@ -121,4 +121,4 @@ func hold_item_type(item,holdCount:int=0,slot:int=-1):
 
 func update_time(cur_time:String,time_color:Color):
 	var tween:Tween=create_tween()
-	tween.tween_property($Sprite2D,"self_modulate",Color.WHITE-time_color+Color(0,0,0,cur_time!="Day"),1.5)
+	tween.tween_property($Sprite2D,"self_modulate",(Color.WHITE-time_color)+Color(0,0,0,float(cur_time!="Day")),1.5)

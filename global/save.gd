@@ -34,12 +34,15 @@ func insertEntitiesToChunk(chunk,entityset):
 
 func loadWorld():
 	var path=GB.getSavePath()
-	if !file.file_exists(path+"data/playerData.dat"):return
+	if !file.file_exists(path+"data/playerData.dat"):
+		GB.player.inventory.call_deferred('store_item',"Drill")
+		return
 	file.open(path+"data/playerData.dat",File.READ)
 	var dataset=str2var(file.get_as_text())
 	GB.player.global_position=dataset.position
 	GB.player.active=false
 	GB.player.inventory.contents=dataset.inventory
+	GB.player.inventory.emit_signal("update_slot",-1)
 
 func saveWorld():
 	var path=GB.getSavePath()

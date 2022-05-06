@@ -5,7 +5,9 @@ var myData={}
 var txt=Label.new()
 func _ready():
 	if myData.icon==null:return
-	texture=load(myData.icon)
+	if myData.icon.contains("user://"):
+		texture=GB.load_external_texture(myData.icon)
+	else:texture=load(myData.icon)
 	if myData.count>1:
 		txt.text=str(myData.count)
 		add_child(txt)

@@ -13,13 +13,16 @@ var c=null
 func _ready():
 	lock_rotation=true
 	can_sleep=false
-	
 	myData=myData.duplicate(true)
+	if myData.icon.contains("user://"):
+		sprite.texture=GB.load_external_texture(myData.icon)
+	else:
+		sprite.texture=load(myData.icon)
 	if myData.count<1:myData.count=1
 	var col=CollisionShape2D.new()
 	c=col
 	col.shape=GB.itemDropShape
-	collision_layer=4
+	collision_layer=2
 	collision_mask=4
 	contact_monitor=true
 	contacts_reported=4
@@ -35,7 +38,6 @@ func _ready():
 	lbl.scale=Vector2(0.5,0.5)
 	lbl.theme=load("gametheme.tres")
 	add_to_group("itemEntities")
-	sprite.texture=load(myData.icon)
 	GB.itemManager.allItems.push_back(self)
 	updateCount()
 func _physics_process(_delta):
@@ -44,20 +46,21 @@ func _physics_process(_delta):
 	query.transform=transform
 	var colliding:=get_world_2d().direct_space_state.intersect_shape(query)
 	if colliding:
-		check_overlap(colliding)
+		check_overlap(colliding,_delta)
 #this is the threaded part
 func check_overlapping_items():
 	for item in GB.itemManager.allItems:
 		if item==self:continue
 		stack_items(item)
 
-func check_overlap(overlapping):
+func check_overlap(overlapping,d):
+	
 	for object in overlapping:
 		if object.collider.name=="Player"&&lifeTime>0.5:
 			if object.collider.inventory.store_item(myData.item_name,myData.count):prep_free()
 			continue
 		if object.collider.get_class()=="TileMap":
-			linear_velocity.y=min(linear_velocity.y,0)-2.5
+			linear_velocity.y-=128*d
 			c.disabled=true
 
 func updateCount():

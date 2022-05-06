@@ -15,7 +15,6 @@ const max_slots=32
 func _ready():
 	for slot in max_slots:contents.push_back({"name":null,"count":1,"icon":null})
 	contents=contents.duplicate(true)
-	call_deferred('store_item',"Drill")
 
 func set_slot(slot,data):
 	contents[slot]=data

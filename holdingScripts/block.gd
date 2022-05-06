@@ -12,7 +12,9 @@ func _ready():
 func update_holding(slot:int=-1):
 	inventory_slot=slot
 	if !holding.has("icon"):return
-	holdImage.texture=load(holding.icon)
+	if holding.icon.contains("user://"):
+		holdImage.texture=GB.load_external_texture(holding.icon)
+	else:holdImage.texture=load(holding.icon)
 	holdImage.visible=true
 	holdImage.region_enabled=true
 func update(_delta=0.0):

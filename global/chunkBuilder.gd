@@ -25,6 +25,11 @@ var baseTerrainStrength=32
 #thread for chunkloading
 var thread=Thread.new()
 var semaphore=Semaphore.new()
+#threads are wonderful once you can use them
+#took me three time making this game to understand them well enough
+#like 1 1/2 months each time i made it over the last 2 years
+#but hey I figured it out mostly so a win in my book
+
 #prepares thread
 func _ready():
 	caveNoise1.seed+=1
@@ -32,7 +37,9 @@ func _ready():
 #does chunk loading using a separate thread to make game run more smoothly
 func _chunkLoad():
 	while true:
+		if GB.close:return
 		semaphore.wait()
+		if GB.close:return
 		var keepchunks=[]
 		#loads chunks in your render distance
 		for chunkX in range(-renderDist,renderDist):
@@ -247,7 +254,7 @@ func insertUpdates(chunkUpdates,chunkUpdateData):
 	return chunkUpdates
 
 
-
+#loads the entities into their respective chunk
 func loadChunkEntities(chunk,list):
 	for entityData in list:
 		var entity=itemEntity.new()
@@ -266,3 +273,16 @@ func caveNoise2D(x,y):
 		b >= (1.0 - border)      and
 		b <= (-2.0 * border / (0.125 - 2.0))
 	))
+
+
+
+#stores chunks for saving
+func store_chunks():
+	for chunk in loadedChunks.keys():
+		var sChunk=loadedChunks[chunk]
+		SaveSystem.saveChunk(chunk,sChunk.getFullData(),chunkEntities[chunk])
+		sChunk.disposeChunk()
+		loadedChunks.erase(chunk)
+		chunkData.erase(chunk)
+		if chunkEntities.has(chunk):
+			chunkEntities.erase(chunk)

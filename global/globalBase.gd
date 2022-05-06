@@ -80,3 +80,28 @@ func placeCellInChunk(chunk,cell,id,layer:int=0):
 	var chunk2=chunkAssemble.loadedChunks[chunk]
 	return chunk2.placeTile(!bool(layer),cell,id)
 	
+
+func load_external_texture(path):
+	var tex_file = File.new()
+	tex_file.open(path, File.READ)
+	var bytes = tex_file.get_buffer(tex_file.get_length())
+	var img = Image.new()
+	var data = img.load_png_from_buffer(bytes)
+	var imgtex = ImageTexture.new()
+	imgtex.create_from_image(img)
+	tex_file.close()
+	return imgtex
+
+#handles closing the game for me
+
+var close=false
+func _notification(what):
+	if what == 1006:
+		chunkAssemble.store_chunks()
+		close=true
+		chunkAssemble.semaphore.post()
+		lighting.s.post()
+		chunkAssemble.thread.wait_to_finish()
+		lighting.thread.wait_to_finish()
+		get_tree().quit()
+

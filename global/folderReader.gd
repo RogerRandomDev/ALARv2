@@ -39,8 +39,6 @@ func loadItems(loc="res://Data/"):
 			it.loadSelf()
 			returned[item.split(".")[0]]=it.get_data()
 	return returned
-
-
 #loads item recipes
 func loadRecipes(loc="res://Recipes/"):
 	var inner=getInnerFile(loc)
@@ -50,3 +48,19 @@ func loadRecipes(loc="res://Recipes/"):
 		var inp=recipe.get_recipe()
 		returned.push_back(inp)
 	return returned
+
+
+
+func loadTexturePack(packName:String):
+	var dir=Directory.new()
+	var path="user://resourcePacks/%s"%packName
+	if !dir.dir_exists(path):return
+	var new_textures=getInnerFile(path)
+	
+	for tex in new_textures:
+		if ItemSystem.allItems.has(tex.trim_suffix(".png")):
+			
+			ItemSystem.allItems[tex.trim_suffix(".png")].icon=path+"/%s"%tex
+			if ItemSystem.allItems[tex.trim_suffix(".png")].item_id>0:
+				GB.Tiles.get_source(ItemSystem.allItems[tex.trim_suffix(".png")].item_id).texture=GB.load_external_texture(path+"/%s"%tex)
+	

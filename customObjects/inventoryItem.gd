@@ -17,7 +17,11 @@ func updateVisibility(visibility):itemHolder.visible=visibility
 
 func update_self():
 	data=data.duplicate(true)
-	if data.texture!=null:icon.texture=load(data.texture)
+	if data.texture!=null:
+		if data.texture.contains("user://"):
+			icon.texture=GB.load_external_texture(data.texture)
+		else:icon.texture=load(data.texture)
 	counter.text=str(data.count)
+	if data.count<2:counter.text=""
 
 
